@@ -10,7 +10,7 @@ import LinkingConfiguration from './navigation/LinkingConfiguration'
 import LoginScreen from './screens/LoginScreen'
 const Stack = createStackNavigator()
 
-export default function App(props) {
+export default function App() {
 	const isLoadingComplete = useCachedResources()
   const isLoggedIn = store.getState().account.userID
   const [login, setLogin] = React.useState(false)
@@ -35,6 +35,7 @@ export default function App(props) {
     )
     }
     else {
+      // Test Login Screen. Needs insane beautification lmao. No padding present either. 
       return (
         <Provider store ={store}>
           <View style={styles.container}>
