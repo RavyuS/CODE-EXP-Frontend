@@ -9,12 +9,12 @@ const accountSlice = createSlice({
             console.log("STATE IN REDUCE ",state)
             return {userID,email}
             
-        }  //note that mutating the state directly works in this case!
+        }  
 	},
 
 })
 
-// action.payload is a standardization of the action object convention (since we don't need to specify the 'type' property anymore, we can simplify it to just the payload.) The FSA convention suggests that rather than having data fields with random names directly in the action object, you should always put your data inside a field named payload.
+// action.payload is a standardization of the action object structure (since we don't need to specify the 'type' property anymore, we can simplify it to just the payload.) The FSA convention suggests that rather than having data fields with random names directly in the action object, you should always put your data inside a field named payload.
 // named export for actions, default export reducer. AKA "ducks" pattern https://github.com/erikras/ducks-modular-redux
 
 export const {setAccountDetails} = accountSlice.actions
