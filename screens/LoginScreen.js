@@ -1,4 +1,4 @@
-import LoginForm from '../account/loginForm'
+import LoginForm from '../features/account/loginForm'
 import {  StyleSheet, View } from 'react-native'
 import React from 'react'
 
