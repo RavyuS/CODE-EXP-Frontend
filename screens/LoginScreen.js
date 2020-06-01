@@ -12,7 +12,7 @@ import axios from 'axios'
 // import {AWS_URL} from 'react-native-dotenv'
 // import { theme } from '../core/theme';
 // import { emailValidator, passwordValidator } from '../core/utils';
-const rootURL = 'http://192.168.1.48:3000'
+import apiURL from '../constants/URLs'
 const mapDispatch = { setAccountDetails }
 
 
@@ -111,6 +111,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const attemptLogin = (id, password) => axios.get(`${rootURL}/api/user/authenticate?id=${id}&pass=${password}`)
+const attemptLogin = (id, password) => axios.get(`${apiURL}/api/user/authenticate?id=${id}&pass=${password}`)
 
 export default connect(null, mapDispatch)(LoginScreen);

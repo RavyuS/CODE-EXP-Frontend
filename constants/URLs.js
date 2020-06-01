@@ -1,0 +1,1 @@
+export default 'http://192.168.1.48:3000' // change this according to your own 
