@@ -8,6 +8,8 @@ import useCachedResources from './hooks/useCachedResources'
 import BottomTabNavigator from './navigation/BottomTabNavigator'
 import LinkingConfiguration from './navigation/LinkingConfiguration'
 import LoginScreen from './screens/LoginScreen'
+import StartScreen from './screens/StartScreen';
+import RegisterScreen from './screens/RegisterScreen'; 
 const Stack = createStackNavigator()
 
 export default function App() {
@@ -16,7 +18,7 @@ export default function App() {
   const [login, setLogin] = React.useState(false)
   console.log(`LOGGED IN? `,Boolean(isLoggedIn))
   console.log('State ',store.getState())
-	if (!isLoadingComplete) {
+  if (!isLoadingComplete) {
 		return null
 	} else {
     if(isLoggedIn){
@@ -38,19 +40,15 @@ export default function App() {
       // Test Login Screen. Needs insane beautification lmao. No padding present either. 
       return (
         <Provider store ={store}>
-          <View style={styles.container}>
-            <LoginScreen setLogin={setLogin}/>
-          </View>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen name="Homepage" component={StartScreen} />
+              <Stack.Screen name="LoginScreen" component={LoginScreen} />
+              <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
         </Provider>
-
       )
     }
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-	},
-})
