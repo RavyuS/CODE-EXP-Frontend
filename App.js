@@ -9,46 +9,47 @@ import BottomTabNavigator from './navigation/BottomTabNavigator'
 import LinkingConfiguration from './navigation/LinkingConfiguration'
 import LoginScreen from './screens/LoginScreen'
 import StartScreen from './screens/StartScreen';
-import RegisterScreen from './screens/RegisterScreen'; 
+import RegisterScreen from './screens/RegisterScreen';
 const Stack = createStackNavigator()
 
 export default function App() {
-	const isLoadingComplete = useCachedResources()
-  const isLoggedIn = store.getState().account.userID
-  const [login, setLogin] = React.useState(false)
-  console.log(`LOGGED IN? `,Boolean(isLoggedIn))
-  console.log('State ',store.getState())
+  const isLoadingComplete = useCachedResources()
+  // const isLoggedIn = store.getState().account.userID
+  // const [login, setLogin] = React.useState(false)
+  // console.log(`LOGGED IN? `, Boolean(isLoggedIn))
+  // console.log('State ', store.getState())
   if (!isLoadingComplete) {
-		return null
-	} else {
-    if(isLoggedIn){
-		return (
-      <Provider store={store}>
-			<View style={styles.container}>
-				{Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
-        
-				<NavigationContainer linking={LinkingConfiguration}>
-					<Stack.Navigator>
-						<Stack.Screen name="Root" component={BottomTabNavigator} />
-					</Stack.Navigator>
-				</NavigationContainer>
-			</View>
-      </Provider>
-    )
-    }
-    else {
-      // Test Login Screen. Needs insane beautification lmao. No padding present either. 
+    return null
+  } else {
+    // if (isLoggedIn) {
       return (
-        <Provider store ={store}>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen name="StartScreen" component={StartScreen} />
-              <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
+        <Provider store={store}>
+
+            {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+
+            <NavigationContainer linking={LinkingConfiguration}>
+              <Stack.Navigator>
+                <Stack.Screen name="StartScreen" component={StartScreen} />
+                <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+                <Stack.Screen name="Root" component={BottomTabNavigator} />
+              </Stack.Navigator>
+            </NavigationContainer>
+
         </Provider>
       )
-    }
-	}
+    // }
+    // else {
+    //   // Test Login Screen. Needs insane beautification lmao. No padding present either. 
+    //   return (
+    //     <Provider store={store}>
+    //       <NavigationContainer>
+    //         <Stack.Navigator>
+
+    //         </Stack.Navigator>
+    //       </NavigationContainer>
+    //     </Provider>
+    //   )
+    // }
+  }
 }

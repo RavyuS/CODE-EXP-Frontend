@@ -6,12 +6,12 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
-import { theme } from '../core/theme';
-import {
-  emailValidator,
-  passwordValidator,
-  nameValidator,
-} from '../core/utils';
+// import { theme } from '../core/theme';
+// import {
+//   emailValidator,
+//   passwordValidator,
+//   nameValidator,
+// } from '../core/utils';
 
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState({ value: '', error: '' });
@@ -19,16 +19,16 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState({ value: '', error: '' });
 
   const _onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+    // const nameError = nameValidator(name.value);
+    // const emailError = emailValidator(email.value);
+    // const passwordError = passwordValidator(password.value);
 
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError });
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
-    }
+    // if (emailError || passwordError || nameError) {
+    //   setName({ ...name, error: nameError });
+    //   setEmail({ ...email, error: emailError });
+    //   setPassword({ ...password, error: passwordError });
+    //   return;
+    // }
 
     navigation.navigate('Dashboard');
   };

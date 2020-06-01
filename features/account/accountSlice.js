@@ -5,9 +5,9 @@ const accountSlice = createSlice({
 	initialState: {},
 	reducers : {
 		setAccountDetails: (state, action) => {
-            const {userID,email} = action.payload
+            const {userID,email,reservations} = action.payload
             console.log("STATE IN REDUCE ",state)
-            return {userID,email}
+            return {userID,email,reservations}
             
         }  
 	},

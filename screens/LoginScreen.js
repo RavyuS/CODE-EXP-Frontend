@@ -7,6 +7,8 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
+import { setAccountDetails } from '../features/account/accountSlice' // Action Creator
+import axios from 'axios'
 // import {AWS_URL} from 'react-native-dotenv'
 // import { theme } from '../core/theme';
 // import { emailValidator, passwordValidator } from '../core/utils';
@@ -19,18 +21,19 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
   const [password, setPassword] = useState({ value: '', error: '' });
 
   const _onLoginPressed = () => {
-    attemptLogin(email, password)
+    attemptLogin(email.value, password.value)
       .then(resp => {
         console.log(resp.data)
         if (resp.status === 200) setAccountDetails(resp.data)
-        setEmail('')
+        // setEmail('')
         setPassword('')
-        navigation.navigate('Dashboard');
+        navigation.navigate('Root');
       })
       .catch(err => {
         console.log(err)
-        setEmail({ ...email, error: emailError });
-        setPassword({ ...password, error: passwordError });
+
+        setEmail({ ...email, error: 'Incorrect email' });
+        setPassword({ ...password, error: 'Error' });
         setPassText('')
       })
 
