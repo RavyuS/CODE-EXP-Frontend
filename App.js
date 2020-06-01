@@ -42,7 +42,7 @@ export default function App() {
         <Provider store ={store}>
           <NavigationContainer>
             <Stack.Navigator>
-              <Stack.Screen name="Homepage" component={StartScreen} />
+              <Stack.Screen name="StartScreen" component={StartScreen} />
               <Stack.Screen name="LoginScreen" component={LoginScreen} />
               <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
             </Stack.Navigator>

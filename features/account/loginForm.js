@@ -18,20 +18,7 @@ const loginForm = ({ setAccountDetails,setLogin }) => {
     const submitLogin = e => {
         e.preventDefault()
         console.log(idText,"PASS ->",passText,"<")
-        attemptLogin(idText, passText)
-            .then(resp => {
-                console.log(resp.data)
-                if (resp.status === 200) setAccountDetails(resp.data)
-                setIDtext('')
-                setPassText('')
-                
-                setLogin(true)
-            })
-            .catch(err => {
-                console.log(err)
-                setPassText('')
-                setLoginError(true)
-            })
+        
 
     }
 
@@ -50,4 +37,4 @@ const loginForm = ({ setAccountDetails,setLogin }) => {
 
 export default connect(null, mapDispatch)(loginForm)
 
-const attemptLogin = (id, password) => axios.get(`${rootURL}/api/user/authenticate?id=${id}&pass=${password}`)
+

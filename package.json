@@ -43,7 +43,8 @@
     "babel-preset-expo": "~8.1.0",
     "eslint": "^7.1.0",
     "eslint-plugin-react": "^7.20.0",
-    "jest-expo": "~37.0.0"
+    "jest-expo": "~37.0.0",
+    "react-native-dotenv": "^0.2.0"
   },
   "private": true
 }
