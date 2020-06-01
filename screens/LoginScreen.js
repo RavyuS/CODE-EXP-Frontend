@@ -34,7 +34,6 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
 
         setEmail({ ...email, error: 'Incorrect email' });
         setPassword({ ...password, error: 'Error' });
-        setPassText('')
       })
 
 
