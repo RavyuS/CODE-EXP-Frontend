@@ -18,7 +18,7 @@ const PlaceInfoScreen = (props) => {
     const [date, setDate] = useState(toDDMMYYYY(new Date())) // always make sure u setDate with a DDMMYYYY string representation of the date
 
     useEffect(() => {
-        Axios.get(`${apiURL}/api/location?areaCode=${areaCode}&date=${date}`)
+        Axios.get(`${apiURL}/api/locations?areaCode=${areaCode}&date=${date}`)
         .then(resp =>{
             // DATA LOAD CODE
             const placesObject = resp.body.places
