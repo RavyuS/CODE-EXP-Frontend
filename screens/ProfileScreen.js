@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import store from '../state/store';
+import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import Table from 'react-native-simple-table';
+import { connect } from 'react-redux';
+import Utils from '../utils';
 
-export default function ProfileScreen() {
+const mapStateToProps = (state) => ({ reservations: state.account.reservations })
 
+const ProfileScreen = (props) => {
     const columns = [
         {
             title: 'Location',
@@ -23,14 +25,14 @@ export default function ProfileScreen() {
         }
     ];
 
-    // store.account.transaction.forEach() entry into format below
-    const dataSource = [
-        {
-            'location': 'JCube',
-            'date': '02/06/2020',
-            'reserved': '1130 - 2300'
-        }
-    ];
+    // reservation = [[ShopName, ShopCode, Date, startIndex, endIndex Number],...]
+    const reservations =  [["Jcube", "FK", "11/23/2021", 0, 2], ["Changi priosn", "YOU", "11/23/2013", 23, 35]]
+    // change below to props.reservations once store has data
+    const dataSource = reservations.map((el) => ({
+        'location': el[0],
+        'date': el[2],
+        'reserved': Utils.getTimeRange(el[3], el[4])
+    }));
 
     return (
         <View style={styles.userInfo}>
@@ -106,3 +108,5 @@ const styles = StyleSheet.create({
         })
     }
   });
+
+export default connect(mapStateToProps)(ProfileScreen);
