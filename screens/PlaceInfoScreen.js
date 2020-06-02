@@ -27,16 +27,25 @@ const PlaceInfoScreen = (props) => {
             .then(resp => {
                 // DATA LOAD CODE
                 // console.log(resp.data.Item)
+                // console.log(resp.data)
                 const placesObject = resp.data.Item.places
                 let areaSlotArray = Array.from({ length: 48 }).fill(0) //initialize with 48 0s
                 const placeSlotsArray = placesObject[placeCode] || Array.from({ length: 48 }).fill(0) //if Place is not in item, then generate an array with 48 indexes
                 for (const placeSlots in placesObject) {
                     placesObject[placeSlots].forEach((slot, index) => areaSlotArray[index] += slot)
                 }
+                
                 // check if any reservations where made in this place
-                const placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
+                console.log(reservations)
+                console.log("HERE")
+                if (reservations[0]) {
+                    const placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
+                }
+                else placeReservations = []
+                
                 const barChartData = slotsToData(placeSlotsArray)
-                // console.log("last part before rerender")
+                console.log(barChartData)
+                console.log("last part before rerender")
                 setRenderedData({
                     placeSlotsArray,
                     areaSlotArray,
@@ -136,9 +145,9 @@ const SlotsBarChart = ({ barChartData }) => {
                 contentInset={{ top: 10, bottom: 10 }}
                 spacing={0.2}
                 gridMin={0}
-            >
+            />
 
-            </BarChart>
+            
         </View>
     )
 }

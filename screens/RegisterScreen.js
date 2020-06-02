@@ -12,7 +12,7 @@ import apiURL from '../constants/URLs';
 
 const mapDispatch = { setAccountDetails };
 const attemptRegister = (name, email, password) => {
-  axios.post(`${apiURL}/api/user/create`, {
+  return axios.post(`${apiURL}/api/user/create`, {
     name,
     email,
     password
@@ -24,26 +24,26 @@ const RegisterScreen = ({ navigation, setAccountDetails }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
-  const _onSignUpPressed = async () => {
-    // attemptRegister(name.value, email.value, password.value)
-    //   .then(resp => {
-    //     if (resp.status === 201) {
-    //       setAccountDetails({
-    //         name: name.value,
-    //         email: email.value,
-    //         reservations: []
-    //       })
+  const _onSignUpPressed = () => {
+    attemptRegister(name.value, email.value, password.value)
+      .then(resp => {
+        if (resp.status === 201) {
+          setAccountDetails({
+            name: name.value,
+            email: email.value,
+            reservations: []
+          })
           navigation.replace('Root');
-      //   } else {
-      //     setEmail({ ...email, error: 'Error' });
-      //     setPassword({ ...password, error: 'Error' });
-      //   }
-      //   setPassword('')
-      // })
-      // .catch(err => {
-      //   setEmail({ ...email, error: 'Error' });
-      //   setPassword({ ...password, error: 'Error' });
-      // })
+        } else {
+          setEmail({ ...email, error: 'Error' });
+          setPassword({ ...password, error: 'Error' });
+        }
+        setPassword('')
+      })
+      .catch(err => {
+        setEmail({ ...email, error: 'Error' });
+        setPassword({ ...password, error: 'Error' });
+      })
   };
 
   return (

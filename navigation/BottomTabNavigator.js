@@ -21,7 +21,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
         name="SearchRoot"
-        component={SearchScreen}
+        component={SearchStack}
         options={{
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="search-location" />,
         }}
