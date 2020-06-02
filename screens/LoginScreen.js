@@ -27,7 +27,11 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
         if (resp.status === 200) setAccountDetails(resp.data)
         // setEmail('')
         setPassword('')
-        navigation.replace('Root');
+        // navigation.replace('Root');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Root' }],
+        })
       })
       .catch(err => {
         console.log(err)

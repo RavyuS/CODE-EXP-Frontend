@@ -4,9 +4,9 @@ import Table from 'react-native-simple-table';
 import { connect } from 'react-redux';
 import Utils from '../utils';
 
-const mapStateToProps = (state) => ({ reservations: state.account.reservations })
+const mapStateToProps = (state) => ({ account: state.account })
 
-const ProfileScreen = (props) => {
+const ProfileScreen = ({account}) => {
     const columns = [
         {
             title: 'Location',
@@ -26,7 +26,8 @@ const ProfileScreen = (props) => {
     ];
 
     // reservation = [[ShopName, ShopCode, Date, startIndex, endIndex Number],...]
-    const reservations =  [["Jcube", "FK", "11/23/2021", 0, 2], ["Changi priosn", "YOU", "11/23/2013", 23, 35]]
+    // const reservations =  [["Jcube", "FK", "11/23/2021", 0, 2], ["Changi priosn", "YOU", "11/23/2013", 23, 35]]
+    const reservations = account.reservations
     // change below to props.reservations once store has data
     const dataSource = reservations.map((el) => ({
         'location': el[0],
@@ -44,8 +45,8 @@ const ProfileScreen = (props) => {
             </View>
 
             <View style={styles.infoWrapper}>
-                <Text style={styles.name}>Rohit</Text>
-                <Text style={styles.job}>rohit@gmail.com</Text>
+                <Text style={styles.name}>{account.name}</Text>
+                <Text style={styles.job}>{account.email}</Text>
             </View>
 
 
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     userInfo: {
       flex: 1,
       flexDirection: "row",
-      marginLeft: 40
+      marginLeft: 30
     },  
     avatarWrapper: {
       flex: 2,

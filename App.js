@@ -10,7 +10,6 @@ import LinkingConfiguration from './navigation/LinkingConfiguration'
 import LoginScreen from './screens/LoginScreen'
 import StartScreen from './screens/StartScreen';
 import RegisterScreen from './screens/RegisterScreen';
-import PlaceInfoScreen from './screens/PlaceInfoScreen'
 const Stack = createStackNavigator()
 
 export default function App() {
@@ -29,11 +28,11 @@ export default function App() {
             {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
 
             <NavigationContainer linking={LinkingConfiguration}>
-              <Stack.Navigator>
+              <Stack.Navigator screenOptions={{headerShown:false}}>
                 <Stack.Screen name="Home" component={StartScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
                 <Stack.Screen name="Register" component={RegisterScreen} />
-                <Stack.Screen name="Root" component={BottomTabNavigator} />
+                <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: true }}/>
               </Stack.Navigator>
             </NavigationContainer>
 

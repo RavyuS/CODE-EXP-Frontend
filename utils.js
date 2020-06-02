@@ -29,4 +29,22 @@ export default class Utils {
         const end = timeRanges[j].split(' - ')[1];
         return start + ' - ' + end;
     }
+    
+    static timeStringToIndex = time => {
+        const timeArray = [...time]
+        const hour = Math(`${timeArray[0]},${timeArray[1]}`)
+        let index = hour*2
+        timeArray[2]==='3' ? index++ : null
+        return index
+    }
+    static toDDMMYYYY = date => {
+        let dateNum = date.getDate()
+        let monthNum = date.getMonth() + 1
+        dateNum < 10 ? dateNum = `0${dateNum}` : dateNum = String(dateNum)
+        monthNum < 10 ? monthNum = `0${monthNum}` : monthNum = String(monthNum)
+    
+        const stringDate = `${dateNum}${monthNum}${date.getFullYear()}`
+        // console.log(stringDate)
+        return stringDate
+    }
 }

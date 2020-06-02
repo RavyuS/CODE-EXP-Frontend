@@ -15,12 +15,12 @@ const StartScreen = ({ navigation }) => {
       <Paragraph>
         Plan your trips, beat the crowd
       </Paragraph>
-      <Button mode="contained" onPress={() => navigation.replace('Login')}>
+      <Button mode="contained" onPress={() => navigation.navigate('Login')}>
         Login
       </Button>
       <Button
         mode="outlined"
-        onPress={() => navigation.replace('Register')}
+        onPress={() => navigation.navigate('Register')}
       >
         Sign Up
       </Button>

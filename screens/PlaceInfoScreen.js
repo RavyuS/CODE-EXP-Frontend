@@ -6,7 +6,7 @@ import apiURL from '../constants/URLs'
 import { ScrollView, View, Text } from 'react-native'
 import { BarChart, YAxis, Grid } from 'react-native-svg-charts'
 import * as scale from 'd3-scale'
-
+import Utils from '../utils'
 const mapStateToProps = state => ({ reservations: state.account.reservations })
 
 
@@ -19,7 +19,7 @@ const PlaceInfoScreen = (props) => {
     const [placeCode] = restOfCode.split(' ')
 
     const [date, setDate] = useState(new Date()) // always make sure u setDate with a DDMMYYYY string representation of the date
-    const dateQuery = toDDMMYYYY(date) //for queries since we store date in DDMMYYYY
+    const dateQuery = Utils.toDDMMYYYY(date) //for queries since we store date in DDMMYYYY
     const [renderedData, setRenderedData] = useState('')
 
     useEffect(() => {
@@ -79,16 +79,7 @@ export default connect(mapStateToProps)(PlaceInfoScreen)
  * @param {Date} date 
  */
 
-export const toDDMMYYYY = date => {
-    let dateNum = date.getDate()
-    let monthNum = date.getMonth() + 1
-    dateNum < 10 ? dateNum = `0${dateNum}` : dateNum = String(dateNum)
-    monthNum < 10 ? monthNum = `0${monthNum}` : monthNum = String(monthNum)
-
-    const stringDate = `${dateNum}${monthNum}${date.getFullYear()}`
-    // console.log(stringDate)
-    return stringDate
-}
+ 
 
 
 // Consolidates data in hourly windows for BarChart to render hours between 0800H to 2200H
