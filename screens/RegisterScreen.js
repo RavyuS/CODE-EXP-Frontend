@@ -30,7 +30,7 @@ const RegisterScreen = ({ navigation }) => {
     //   return;
     // }
 
-    navigation.navigate('Dashboard');
+    navigation.navigate('Root');
   };
 
   return (

@@ -12,7 +12,7 @@ import axios from 'axios'
 // import {AWS_URL} from 'react-native-dotenv'
 // import { theme } from '../core/theme';
 // import { emailValidator, passwordValidator } from '../core/utils';
-const rootURL = 'http://192.168.1.48:3000'
+const rootURL = 'http://192.168.1.109:3000'
 const mapDispatch = { setAccountDetails }
 
 
