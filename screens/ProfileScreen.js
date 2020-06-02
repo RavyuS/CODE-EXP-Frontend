@@ -1,33 +1,63 @@
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { ScrollView } from 'react-native-gesture-handler';
-import { MonoText } from '../components/StyledText';
 import store from '../state/store';
+import Table from 'react-native-simple-table';
 
 export default function ProfileScreen() {
-  return (
-    <View style={styles.userInfo}>
-        <View style={styles.avatarWrapper}>
-            <Image
-                source={require('../assets/images/avatar.png')}
-                style={styles.avatarImg}
-            />
-        </View>
 
-        <View style={styles.infoWrapper}>
-            <Text style={styles.name}>Rohit</Text>
-            <Text style={styles.job}>rohit@gmail.com</Text>
-        </View>
+    const columns = [
+        {
+            title: 'Location',
+            dataIndex: 'location',
+            width: 130
+        },
+        {
+            title: 'Date',
+            dataIndex: 'date',
+            width: 100
+        },
+        {
+            title: 'Reserved',
+            dataIndex: 'reserved',
+            width: 100
+        }
+    ];
+
+    // store.account.transaction.forEach() entry into format below
+    const dataSource = [
+        {
+            'location': 'JCube',
+            'date': '02/06/2020',
+            'reserved': '1130 - 2300'
+        }
+    ];
+
+    return (
+        <View style={styles.userInfo}>
+            <View style={styles.avatarWrapper}>
+                <Image
+                    source={require('../assets/images/avatar.png')}
+                    style={styles.avatarImg}
+                />
+            </View>
+
+            <View style={styles.infoWrapper}>
+                <Text style={styles.name}>Rohit</Text>
+                <Text style={styles.job}>rohit@gmail.com</Text>
+            </View>
 
 
-        <View style={styles.reservations}>
-            <Text style={styles.reservationsHeader}>
-                Reservations
-            </Text>
+            <View style={styles.reservations}>
+                <Text style={styles.reservationsHeader}>
+                    Reservations
+                </Text>
+
+                <View style={styles.tableContainer}>
+                    <Table bodyStyle={styles.table} height={320} columnWidth={60} columns={columns} dataSource={dataSource} />
+                </View>
+            </View>
         </View>
-    </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
@@ -65,8 +95,14 @@ const styles = StyleSheet.create({
     },
     reservationsHeader: {
         fontSize: 36,
-        position: "relative",
-        marginLeft: "auto",
-        marginRight: "auto"
+        position: "relative"
+    },
+    tableContainer: {
+        ...Platform.select({
+          ios: {
+            paddingTop: 20
+          },
+          android: {}
+        })
     }
   });
