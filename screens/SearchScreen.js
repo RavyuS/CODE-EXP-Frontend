@@ -7,10 +7,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useState } from 'react';
+import apiURL from '../constants/URLs'
 
 import { MonoText } from '../components/StyledText';
 import store from '../state/store';
-import { TextInput, Searchbar } from 'react-native-paper';
+import { TextInput, Searchbar, Button } from 'react-native-paper';
 
 function Item({ title }) {
   return (
@@ -19,27 +20,30 @@ function Item({ title }) {
     </View>
   )
 }
-const apiURL = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyDlrF2T7k61EdNL_qbL3pG-95rjqYzXy-g"
 
 export default function SearchScreen({ navigation }) {
-  const [data, setData] = useState({ value: []} );
-  const [placeDetails, setplaceDetails] = useState({ value: {}} )
+  const [data, setData] = useState([{ 
+    compoundCode : "9V2C+CQ Singapore",
+    formattedAddress : "23 Serangoon Central, #03-42 Nex Mall, Singapore 556083",
+    name : "FairPrice Xtra Nex Mall"
+  }]);
+  let placeDetails
+  const [searchText, setSearchText] = useState("")
 
-  const searchQuery= '';
-  const _onSearch = (query) => axios.get(`${apiURL}&input=${query}
-    &inputtype=textquery`)
+  _onSearch = () => axios.get(`${apiURL}/api/googleapi?name=${searchText}`)
     .then(res =>{
-      axios.get(`${apiURL}/details/json?key=${apiKEY}&place_id=${res["candidates"]["place_id"]}`)
-        .then(res => {
-          setplaceDetails({ 
-            compoundCode : res.candidates.plus_code.compound_code,
-            formattedAddress : res.candidates.formatted_address,
-            name : res.candidates.name
-          });
-          setData([placeDetails]);
-          navigation.navigate('PlaceInfo', placeDetails);
-        })
-    })
+      console.log(res);
+      placeDetails = { 
+        compoundCode : res.data.candidates[0].plus_code.compound_code,
+        formattedAddress : res.data.candidates[0].formatted_address,
+        name : res.data.candidates[0].name
+      };
+      setData([placeDetails]);
+      console.log(navigation)
+      navigation.navigate('PlaceInfo', placeDetails);
+    }).catch(error =>{
+      console.log(error);
+    });
 
   return (
     <View style={styles.container}>
@@ -47,16 +51,19 @@ export default function SearchScreen({ navigation }) {
           style={styles.search} 
           placeholder = "Search for a location"
           icon={() => <MaterialCommunityIcons name="map-search" size={30}/>}
-          onChangeText = {_onSearch}
+          onChangeText = {(value) => setSearchText(value)}
         />
+        <Button icon="search" onPress={this._onSearch}>
+          Submit
+        </Button>
         <SafeAreaView style = {{flex:12}}>
           <FlatList
             data={data}
             renderItem={({ item }) =>
               <Item 
-                title = {item.compoundCode }
+                title = {item.compoundCode}
                 onPress = {() => {
-                  navigation.navigate('PlaceInfoScreen')
+                  navigation.navigate('PlaceInfo')
                 }}
               />
             }
