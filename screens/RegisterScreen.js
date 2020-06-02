@@ -5,32 +5,45 @@ import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
-// import { theme } from '../core/theme';
-// import {
-//   emailValidator,
-//   passwordValidator,
-//   nameValidator,
-// } from '../core/utils';
+import { connect } from 'react-redux';
+import { setAccountDetails } from '../features/account/accountSlice'; // Action Creator
+import axios from 'axios';
+import apiURL from '../constants/URLs';
 
-const RegisterScreen = ({ navigation }) => {
+const mapDispatch = { setAccountDetails };
+const attemptRegister = (name, email, password) => {
+  axios.post(`${apiURL}/api/user/create`, {
+    name,
+    email,
+    password
+  });
+}
+
+const RegisterScreen = ({ navigation, setAccountDetails }) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
-  const _onSignUpPressed = () => {
-    // const nameError = nameValidator(name.value);
-    // const emailError = emailValidator(email.value);
-    // const passwordError = passwordValidator(password.value);
-
-    // if (emailError || passwordError || nameError) {
-    //   setName({ ...name, error: nameError });
-    //   setEmail({ ...email, error: emailError });
-    //   setPassword({ ...password, error: passwordError });
-    //   return;
-    // }
-
-    navigation.replace('Search');
+  const _onSignUpPressed = async () => {
+    attemptRegister(name.value, email.value, password.value)
+      .then(resp => {
+        if (resp.status === 201) {
+          setAccountDetails({
+            name: name.value,
+            email: email.value,
+            reservations: []
+          })
+          navigation.replace('Search');
+        } else {
+          setEmail({ ...email, error: 'Error' });
+          setPassword({ ...password, error: 'Error' });
+        }
+        setPassword('')
+      })
+      .catch(err => {
+        setEmail({ ...email, error: 'Error' });
+        setPassword({ ...password, error: 'Error' });
+      })
   };
 
   return (
@@ -44,7 +57,7 @@ const RegisterScreen = ({ navigation }) => {
         returnKeyType="next"
         value={name.value}
         onChangeText={text => setName({ value: text, error: '' })}
-        error={!!name.error}
+        error={name.error}
         errorText={name.error}
       />
 
@@ -53,7 +66,7 @@ const RegisterScreen = ({ navigation }) => {
         returnKeyType="next"
         value={email.value}
         onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
+        error={email.error}
         errorText={email.error}
         autoCapitalize="none"
         autoCompleteType="email"
@@ -102,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(RegisterScreen);
+export default connect(null, mapDispatch)(RegisterScreen);
