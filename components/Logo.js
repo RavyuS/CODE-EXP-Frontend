@@ -2,14 +2,13 @@ import React, { memo } from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
 
 const Logo = () => (
-  <Text>hi</Text>
-  // <Image source={require('../assets/logo.png')} style={styles.image} />
+  <Image source={require('../assets/images/logo.png')} style={styles.image} />
 );
 
 const styles = StyleSheet.create({
   image: {
-    width: 128,
-    height: 128,
+    width: 144,
+    height: 135,
     marginBottom: 12,
   },
 });

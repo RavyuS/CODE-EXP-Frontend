@@ -30,13 +30,11 @@ const RegisterScreen = ({ navigation }) => {
     //   return;
     // }
 
-    navigation.navigate('Root');
+    navigation.replace('Search');
   };
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
-
       <Logo />
 
       <Header>Create Account</Header>
@@ -79,7 +77,7 @@ const RegisterScreen = ({ navigation }) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+        <TouchableOpacity onPress={() => navigation.replace('Login')}>
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>

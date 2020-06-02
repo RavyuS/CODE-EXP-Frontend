@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
         if (resp.status === 200) setAccountDetails(resp.data)
         // setEmail('')
         setPassword('')
-        navigation.navigate('Root');
+        navigation.replace('Search');
       })
       .catch(err => {
         console.log(err)
@@ -35,13 +35,10 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
         setEmail({ ...email, error: 'Incorrect email' });
         setPassword({ ...password, error: 'Error' });
       })
-
-
   };
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('StartScreen')} />
 
       <Logo />
 
@@ -70,13 +67,7 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
         secureTextEntry
       />
 
-      <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-        >
-          <Text style={styles.label}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View>
+      <View style={styles.forgotPassword} />
 
       <Button mode="contained" onPress={_onLoginPressed}>
         Login
@@ -84,7 +75,7 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.replace('Register')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>

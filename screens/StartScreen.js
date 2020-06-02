@@ -7,25 +7,20 @@ import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
 
 const StartScreen = ({ navigation }) => {
-
-  // useEffect(() => console.log('hi', navigation));
- 
-  // return <Text>hi ther</Text>
-
   return (
     <Background>
       <Logo />
-      <Header>Login Template</Header>
+      <Header>SafeLah!</Header>
 
       <Paragraph>
-        The easiest way to start with your amazing application.
+        Plan your trips, beat the crowd
       </Paragraph>
-      <Button mode="contained" onPress={() => navigation.navigate('LoginScreen')}>
+      <Button mode="contained" onPress={() => navigation.replace('Login')}>
         Login
       </Button>
       <Button
         mode="outlined"
-        onPress={() => navigation.navigate('RegisterScreen')}
+        onPress={() => navigation.replace('Register')}
       >
         Sign Up
       </Button>

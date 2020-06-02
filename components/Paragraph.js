@@ -6,11 +6,11 @@ const Paragraph = ({ children }) => <Text style={styles.text}>{children}</Text>;
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
+    fontSize: 20,
     lineHeight: 26,
-    color: 'blue', // theme.colors.secondary,
+    color: 'grey',
     textAlign: 'center',
-    marginBottom: 14,
+    marginBottom: 14
   },
 });
 

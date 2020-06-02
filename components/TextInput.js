@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   input: {
-    backgroundColor: 'green',
+    backgroundColor: 'white',
   },
   error: {
     fontSize: 14,

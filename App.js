@@ -29,10 +29,10 @@ export default function App() {
 
             <NavigationContainer linking={LinkingConfiguration}>
               <Stack.Navigator>
-                <Stack.Screen name="StartScreen" component={StartScreen} />
-                <Stack.Screen name="LoginScreen" component={LoginScreen} />
-                <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-                <Stack.Screen name="Root" component={BottomTabNavigator} />
+                <Stack.Screen name="Home" component={StartScreen} />
+                <Stack.Screen name="Login" component={LoginScreen} />
+                <Stack.Screen name="Register" component={RegisterScreen} />
+                <Stack.Screen name="Search" component={BottomTabNavigator} />
               </Stack.Navigator>
             </NavigationContainer>
 
