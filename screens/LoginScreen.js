@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
         if (resp.status === 200) setAccountDetails(resp.data)
         // setEmail('')
         setPassword('')
-        navigation.replace('Search');
+        navigation.replace('Root');
       })
       .catch(err => {
         console.log(err)

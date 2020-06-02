@@ -1,41 +1,38 @@
 import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SearchScreen from '../screens/SearchScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import SearchStack from './SearchStack'
+import PlaceInfoScreen from '../screens/PlaceInfoScreen';
 
-const BottomTab = createBottomTabNavigator();
+const SearchStack = createStackNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
-export default function BottomTabNavigator({ navigation, route }) {
+export default function ({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
-      <BottomTab.Screen
-        name="SearchRoot"
-        component={SearchStack}
+    <SearchStack.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+      <SearchStack.Screen
+        name="SearchInfo"
+        component={SearchScreen}
         options={{
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="search-location" />,
+            title: 'Search',
         }}
         >
-      </BottomTab.Screen>
-      <BottomTab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="user" />,
-        }}
-      />
-    </BottomTab.Navigator>
+      </SearchStack.Screen>
+      <SearchStack.Screen
+        name="PlaceInfo"
+        component={PlaceInfoScreen}
+        >
+      </SearchStack.Screen>
+    </SearchStack.Navigator>
   );
 }
 

@@ -33,7 +33,7 @@ const RegisterScreen = ({ navigation, setAccountDetails }) => {
             email: email.value,
             reservations: []
           })
-          navigation.replace('Search');
+          navigation.replace('Root');
         } else {
           setEmail({ ...email, error: 'Error' });
           setPassword({ ...password, error: 'Error' });
