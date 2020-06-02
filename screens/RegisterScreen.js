@@ -25,25 +25,25 @@ const RegisterScreen = ({ navigation, setAccountDetails }) => {
   const [password, setPassword] = useState({ value: '', error: '' });
 
   const _onSignUpPressed = async () => {
-    attemptRegister(name.value, email.value, password.value)
-      .then(resp => {
-        if (resp.status === 201) {
-          setAccountDetails({
-            name: name.value,
-            email: email.value,
-            reservations: []
-          })
+    // attemptRegister(name.value, email.value, password.value)
+    //   .then(resp => {
+    //     if (resp.status === 201) {
+    //       setAccountDetails({
+    //         name: name.value,
+    //         email: email.value,
+    //         reservations: []
+    //       })
           navigation.replace('Root');
-        } else {
-          setEmail({ ...email, error: 'Error' });
-          setPassword({ ...password, error: 'Error' });
-        }
-        setPassword('')
-      })
-      .catch(err => {
-        setEmail({ ...email, error: 'Error' });
-        setPassword({ ...password, error: 'Error' });
-      })
+      //   } else {
+      //     setEmail({ ...email, error: 'Error' });
+      //     setPassword({ ...password, error: 'Error' });
+      //   }
+      //   setPassword('')
+      // })
+      // .catch(err => {
+      //   setEmail({ ...email, error: 'Error' });
+      //   setPassword({ ...password, error: 'Error' });
+      // })
   };
 
   return (

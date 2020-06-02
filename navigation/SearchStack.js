@@ -11,11 +11,11 @@ import PlaceInfoScreen from '../screens/PlaceInfoScreen';
 const SearchStack = createStackNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
-export default function ({ navigation, route }) {
+export default function SearchStackNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
   // currently active tab. Learn more in the documentation:
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  navigation.setOptions({headerTitle: getHeaderTitle(route)});
 
   return (
     <SearchStack.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
@@ -30,6 +30,9 @@ export default function ({ navigation, route }) {
       <SearchStack.Screen
         name="PlaceInfo"
         component={PlaceInfoScreen}
+        options={{
+            title: 'Place Info',
+        }}
         >
       </SearchStack.Screen>
     </SearchStack.Navigator>
@@ -42,7 +45,7 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Search':
       return 'Search';
-    case 'Profile':
-      return 'Profile';
+    case 'PlaceInfo':
+      return 'PlaceInfo';
   }
 }
