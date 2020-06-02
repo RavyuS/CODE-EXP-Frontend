@@ -10,6 +10,7 @@ import LinkingConfiguration from './navigation/LinkingConfiguration'
 import LoginScreen from './screens/LoginScreen'
 import StartScreen from './screens/StartScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import PlaceInfoScreen from './screens/PlaceInfoScreen'
 const Stack = createStackNavigator()
 
 export default function App() {
