@@ -3,6 +3,8 @@ import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { MonoText } from '../components/StyledText';
 import store from '../state/store';
@@ -30,7 +32,10 @@ export default function SearchScreen() {
   ];
   return (
     <View style={styles.container}>
-        <Searchbar style={styles.search} placeholder = "Search for a location"
+        <Searchbar 
+          style={styles.search} 
+          placeholder = "Search for a location"
+          icon={() => <MaterialCommunityIcons name="map-search" size={30}/>}
         />
         <SafeAreaView style = {{flex:12}}>
           <FlatList
