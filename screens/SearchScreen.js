@@ -52,10 +52,8 @@ export default function SearchScreen({ navigation }) {
           placeholder = "Search for a location"
           icon={() => <MaterialCommunityIcons name="map-search" size={30}/>}
           onChangeText = {(value) => setSearchText(value)}
+          onIconPress={this._onSearch}
         />
-        <Button icon="search" onPress={this._onSearch}>
-          Submit
-        </Button>
         <SafeAreaView style = {{flex:12}}>
           <FlatList
             data={data}
@@ -63,7 +61,7 @@ export default function SearchScreen({ navigation }) {
               <Item 
                 title = {item.compoundCode}
                 onPress = {() => {
-                  navigation.navigate('PlaceInfo')
+                  navigation.navigate('PlaceInfo',placeDetails)
                 }}
               />
             }
