@@ -221,7 +221,7 @@ const pickerStyle = {
         padding: 2,
         width: 80,
         borderRadius: 5,
-        backgroundColor: 'white',
+        backgroundColor: '#FFF5EB',
 	},
 	inputAndroid: {
 		color: 'black',
@@ -229,7 +229,7 @@ const pickerStyle = {
         padding: 2,
         width: 80,
         borderRadius: 5,
-        backgroundColor: 'rgba(255, 235, 214, 0.8)'
+        backgroundColor: '#FFF5EB'
 	}
 	// placeholderColor: 'white',
 	// underline: { borderTopWidth: 0 },
@@ -253,6 +253,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'rgba(35, 61, 77, 0.45)',
         padding: 20,
+        paddingTop:5,
         // justifyContent: "center"
     },
     inputContainer: {
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: '#233D4D',
-        color: 'white',
+        color: '#FFEBD6',
         width: 100,
         borderRadius: 10,
         left: 130,

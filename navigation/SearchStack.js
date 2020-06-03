@@ -18,7 +18,7 @@ export default function SearchStackNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
-    <SearchStack.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+    <SearchStack.Navigator initialRouteName={INITIAL_ROUTE_NAME} screenOptions={{flex:1}}>
       <SearchStack.Screen
         name="SearchInfo"
         component={SearchScreen}

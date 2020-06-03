@@ -13,6 +13,7 @@ import Table from 'react-native-simple-table';
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button } from 'react-native-paper';
+import PlaceLineChart from '../features/placeInfo/PlaceLineChart'
 
 // import { Button } from 'react-native-paper'
 const mapStateToProps = state => ({ reservations: state.account.reservations })
@@ -33,13 +34,15 @@ const PlaceInfoScreen = (props) => {
     console.log(date)
     const [renderedData, setRenderedData] = useState('')
     const [formSubmitted, setFormSubmitted] = useState(0)
+    const [ predictedData, setPredictedData] = useState(false)
 
     const calendarSetDate = (event, date) => {
         setShowCalendar(false)
         date ? setDate(date):null
         
     }
-
+    
+    console.log(predictedData)
     useEffect(() => {
         Axios.get(`${apiURL}/api/locations?areaCode=${areaCode}&date=${dateQuery}`)
             .then(resp => {
@@ -57,6 +60,9 @@ const PlaceInfoScreen = (props) => {
                 if (reservations) {
                     placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
                 }
+                // console.log(areaCode, placeCode, dateQuery)
+                if(areaCode==='9V2C' && placeCode ==='CQ' && dateQuery === '04062020')  setPredictedData(true)
+                
                 
                 // console.log(placeReservations)
                 const barChartData = slotsToData(placeSlotsArray)
@@ -79,9 +85,9 @@ const PlaceInfoScreen = (props) => {
         <Text>Rendering</Text>
     )
     else return (
-        <View >
+        <View style={{flex:1}}>
             <View style={styles.scrollView}>
-                <ScrollView style={{ flex: 8 }}>
+                <ScrollView>
                     <View style={{flex:1}}>
                         <Text style={styles.name}>{name}</Text>
                         <Text style={styles.address}>{formattedAddress}</Text>
@@ -102,13 +108,14 @@ const PlaceInfoScreen = (props) => {
                         />)}
 
                     </View>
-                    <SlotsBarChart barChartData={renderedData.barChartData} />
-                    <Text style={styles.reservationsHeader}>Your reservations:</Text>
+                    {/* <SlotsBarChart barChartData={renderedData.barChartData} /> */}
+                    <PlaceLineChart placeSlotsArray={renderedData.placeSlotsArray} predict={predictedData} />
+                    <Text style={styles.reservationsHeader}>Your Reservations</Text>
                     <ReseservationList placeReservations={renderedData.placeReservations} />
                     
                 </ScrollView>
             </View>
-            <View style={{ flex: 5 }}>
+            <View style={{ flex: 2}}>
                 <ReservationForm
                     placeSlotsArray={renderedData.placeSlotsArray}
                     name={name}
@@ -246,7 +253,8 @@ const styles = StyleSheet.create({
         fontSize: 24,
         position: "relative",
         fontWeight: "bold",
-        color: "#233D4D"
+        color: "#233D4D",
+        textAlign:'center'
     },
     calendarButton:{
         flexDirection: 'row',
@@ -254,7 +262,8 @@ const styles = StyleSheet.create({
         textAlign:'center'
     },
     scrollView: {
-        height: '85%',
-        
+        flex:6,
+         
     }
 });
+

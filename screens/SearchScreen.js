@@ -90,7 +90,7 @@ function SearchScreen({ navigation, reservations }) {
           keyExtractor={item => item.name}
         />
       </SafeAreaView>
-      <Text style={{color:'#233D4D',textAlign:'center', marginTop:-5}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
+      <Text style={{color:'#233D4D',textAlign:'center', fontSize:12,backgroundColor:'#FFEBD6'}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
     </View>
   );
 }
