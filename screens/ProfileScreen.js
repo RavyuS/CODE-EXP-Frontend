@@ -11,28 +11,30 @@ const ProfileScreen = ({account}) => {
         {
             title: 'Location',
             dataIndex: 'location',
-            width: 130
+            width: 140
         },
         {
             title: 'Date',
             dataIndex: 'date',
-            width: 100
+            width: 90
         },
         {
             title: 'Reserved',
             dataIndex: 'reserved',
-            width: 100
-        }
+            width: 90
+        },
+        {
+            title: 'Pax',
+            dataIndex: 'number',
+            width: 30
+        },
     ];
 
-    // reservation = [[ShopName, ShopCode, Date, startIndex, endIndex Number],...]
-    // const reservations =  [["Jcube", "FK", "11/23/2021", 0, 2], ["Changi priosn", "YOU", "11/23/2013", 23, 35]]
-    const reservations = account.reservations
-    // change below to props.reservations once store has data
-    const dataSource = reservations.map((el) => ({
+    const dataSource = account.reservations.map((el) => ({
         'location': el[0],
-        'date': el[2],
-        'reserved': Utils.getTimeRange(el[3], el[4])
+        'date': el[2][0]+el[2][1]+'/'+el[2][2]+el[2][3]+'/'+el[2][4]+el[2][5]+el[2][6]+el[2][7],
+        'reserved': Utils.getTimeRange(el[3], el[4]),
+        'number': el[5]
     }));
 
     return (
@@ -77,7 +79,7 @@ const styles = StyleSheet.create({
     },
     infoWrapper: {
       flex: 2,
-      marginTop: 90
+      marginTop: 130
     },
     avatarImg: {
       height: 120,
@@ -93,7 +95,7 @@ const styles = StyleSheet.create({
     reservations: {
         flex: 1,
         position: "absolute",
-        top: 200,
+        top: 250,
         justifyContent: "space-between"
     },
     reservationsHeader: {
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
             paddingTop: 20
           },
           android: {}
-        })
+        }),
     }
   });
 

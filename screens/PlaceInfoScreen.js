@@ -124,28 +124,28 @@ const ReseservationList = ({ placeReservations }) => {
         {
             title: 'Location',
             dataIndex: 'location',
-            width: 130
+            width: 140
         },
         {
             title: 'Date',
             dataIndex: 'date',
-            width: 100
+            width: 90
         },
         {
             title: 'Reserved',
             dataIndex: 'reserved',
-            width: 100
+            width: 90
         },
         {
-            title: 'Num',
+            title: 'Pax',
             dataIndex: 'number',
-            width: 40
+            width: 30
         },
     ];
     if (placeReservations[0]) {
         const dataSource = placeReservations.map((el) => ({
             'location': el[0],
-            'date': el[2],
+            'date': el[2][0]+el[2][1]+'/'+el[2][2]+el[2][3]+'/'+el[2][4]+el[2][5]+el[2][6]+el[2][7],
             'reserved': Utils.getTimeRange(el[3], el[4]),
             'number': el[5]
         }))
