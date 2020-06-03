@@ -13,21 +13,17 @@ import { MonoText } from '../components/StyledText';
 import store from '../state/store';
 import { TextInput, Searchbar, Button } from 'react-native-paper';
 
-function Item({ title }) {
-  return (
-    <View style = {styles.listItem}>
-      <Text style= {styles.title}>{title}</Text>
-    </View>
-  )
+function Item({ address, title, onSelect }) {
+  
 }
-
 export default function SearchScreen({ navigation }) {
-  const [data, setData] = useState([{ 
+  let placeDetails = { 
     compoundCode : "9V2C+CQ Singapore",
     formattedAddress : "23 Serangoon Central, #03-42 Nex Mall, Singapore 556083",
     name : "FairPrice Xtra Nex Mall"
-  }]);
-  let placeDetails
+  }
+  // once we set up history in store, no need to declare placedetails early
+  const [history, setHistory] = useState([placeDetails]);
   const [searchText, setSearchText] = useState("")
 
   _onSearch = () => axios.get(`${apiURL}/api/googleapi?name=${searchText}`)
@@ -38,11 +34,17 @@ export default function SearchScreen({ navigation }) {
         formattedAddress : res.data.candidates[0].formatted_address,
         name : res.data.candidates[0].name
       };
-      setData([placeDetails]);
+      if (!history.includes([placeDetails])) {
+        setHistory(history => [placeDetails].concat(history));
+      }
+      
       navigation.navigate('PlaceInfo', placeDetails);
-    }).catch(error =>{
-      console.log(error);
-    });
+    }).catch(error =>{console.log(error)}
+  );
+
+  onSelect = () => {
+    navigation.navigate('PlaceInfo',placeDetails)
+  }
 
   return (
     <View style={styles.container}>
@@ -55,14 +57,20 @@ export default function SearchScreen({ navigation }) {
         />
         <SafeAreaView style = {{flex:12}}>
           <FlatList
-            data={data}
-            renderItem={({ item }) =>
-              <Item 
-                title = {item.compoundCode}
-                onPress = {() => {
-                  navigation.navigate('PlaceInfo',placeDetails)
-                }}
-              />
+            data={history}
+            renderItem={({ item }) => {
+              return (
+                <TouchableOpacity
+                  onPress={this.onSelect}
+                  style={[
+                    styles.listItem,
+                    { backgroundColor: '#f9c2ff'},
+                  ]}
+                >
+                  <Text style={styles.title}>{item.name}</Text>
+                  <Text style={styles.address}>{item.formattedAddress}</Text>
+                </TouchableOpacity>
+              );}
             }
             keyExtractor={item => item.id}
           />
