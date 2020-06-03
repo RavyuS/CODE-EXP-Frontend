@@ -31,7 +31,7 @@ const PlaceInfoScreen = (props) => {
     const [date, setDate] = useState(new Date()) // always make sure u setDate with a DDMMYYYY string representation of the date
     const dateQuery = Utils.toDDMMYYYY(date) //for queries since we store date in DDMMYYYY
     
-    console.log(date)
+    // console.log(date)
     const [renderedData, setRenderedData] = useState('')
     const [formSubmitted, setFormSubmitted] = useState(0)
     const [ predictedData, setPredictedData] = useState(false)
@@ -60,8 +60,9 @@ const PlaceInfoScreen = (props) => {
                 if (reservations) {
                     placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
                 }
-                // console.log(areaCode, placeCode, dateQuery)
+                console.log(areaCode, placeCode, dateQuery)
                 if(areaCode==='9V2C' && placeCode ==='CQ' && dateQuery === '04062020')  setPredictedData(true)
+                else setPredictedData(false)
                 
                 
                 // console.log(placeReservations)
@@ -93,7 +94,7 @@ const PlaceInfoScreen = (props) => {
                         <Text style={styles.address}>{formattedAddress}</Text>
                         {/* <Text>{date.toDateString()}</Text> */}
                         <View style={{padding:10}}/>
-                        <Button onPress={()=>setShowCalendar(true)} mode='contained' style={{marginLeft:'auto',marginRight:'auto'}} color='#233D4D'>
+                        <Button onPress={()=>setShowCalendar(true)} mode='contained' style={{marginLeft:'auto',marginRight:'auto'}} color='purple'>
                             {date.toDateString()}
                         </Button>
                         
