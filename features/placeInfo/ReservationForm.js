@@ -123,6 +123,7 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
                             onValueChange={onPaxChange}
                             items={dropdownItems.paxDropdown}
                             placeholder={{label: "No. of pax", value: null}}
+                            useNativeAndroidPickerStyle={false}
                         />
                     </View>
 
@@ -133,6 +134,7 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
                             onValueChange={onStartTimeChange}
                             items={dropdownItems.timeDropdown}
                             placeholder={{label: "Start time", value: null}}
+                            useNativeAndroidPickerStyle={false}
                         />
                     </View>
 
@@ -144,6 +146,7 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
                             onValueChange={onEndTimeChange}
                             items={dropdownItems.timeDropdown}
                             placeholder={{label: "End time", value: null}}
+                            useNativeAndroidPickerStyle={false}
                         />
                     </View>
                 </View>
@@ -227,7 +230,7 @@ const pickerStyle = {
         width: 80,
         borderRadius: 5,
         backgroundColor: 'rgba(255, 235, 214, 0.8)'
-	},
+	}
 	// placeholderColor: 'white',
 	// underline: { borderTopWidth: 0 },
 	// icon: {
