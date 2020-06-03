@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Divider, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,9 +10,7 @@ import { useState } from 'react';
 import apiURL from '../constants/URLs'
 import { connect } from 'react-redux'
 
-import { MonoText } from '../components/StyledText';
-import store from '../state/store';
-import { TextInput, Searchbar, Button } from 'react-native-paper';
+import { Searchbar } from 'react-native-paper';
 
 
 const mapStateToProps = state => ({ reservations: state.account.reservations })
@@ -82,7 +80,7 @@ function SearchScreen({ navigation, reservations }) {
               <TouchableOpacity
                 onPress={() => onSelect(item)}
                 style={styles.touchableOpacity}>
-                <MaterialIcons name="place" size={40} color="green" style={styles.icon} />
+                <MaterialIcons name="place" size={40} color="#EE964B" style={styles.icon} />
                 <View style = {{width:'90%', alignItems:'flex-start'}}>
                   <Text style={styles.name}>{item.name}</Text>
                   <Text style={styles.address}>{item.formattedAddress}</Text>
