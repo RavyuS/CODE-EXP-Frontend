@@ -65,11 +65,13 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
             const increment = pax
             updateDatabase({ areaCode, date, placeCode, date, startIndex, endIndex, increment, email, reservations:newReservations })
                 .then(Resp => {
-                    setPax(0)
-                    setTime({
-                        startTime: { value: "0000", index: 0 },
-                        endTime: { value: "0030", index: 1 }
-                    })
+                    // commented out till can find a way to reset timepicker, confusing when value presented to user is
+                    // different from value stored (timepicker doesnt reset on submit)
+                    // setPax(0)
+                    // setTime({
+                    //     startTime: { value: "0000", index: 0 },
+                    //     endTime: { value: "0030", index: 1 }
+                    // })
                     setStatus("successfully updated")
                     setFormSubmitted(formSubmitted+1)
                 }) //note that pax is increment in endpoint
