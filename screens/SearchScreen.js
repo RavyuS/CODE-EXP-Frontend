@@ -19,18 +19,13 @@ function Item({ address, title, onSelect }) {
 
 
 export default function SearchScreen({ navigation }) {
-  let placeDetails = {
-    compoundCode: "9V2C+CQ Singapore",
-    formattedAddress: "23 Serangoon Central, #03-42 Nex Mall, Singapore 556083",
-    name: "FairPrice Xtra Nex Mall"
-  }
+  let placeDetails = {};
   // once we set up history in store, no need to declare placedetails early
   const [history, setHistory] = useState(preparedPlaces);
   const [searchText, setSearchText] = useState("")
 
   const _onSearch = () => axios.get(`${apiURL}/api/googleapi?name=${searchText}`)
     .then(res => {
-      console.log(res);
       placeDetails = {
         compoundCode: res.data.candidates[0].plus_code.compound_code,
         formattedAddress: res.data.candidates[0].formatted_address,
@@ -39,12 +34,12 @@ export default function SearchScreen({ navigation }) {
       if (!history.includes([placeDetails])) {
         setHistory(history => [placeDetails].concat(history));
       }
-
       navigation.navigate('PlaceInfo', placeDetails);
     }).catch(error => { console.log(error) }
     );
 
   const onSelect = (item) => {
+    console.log(item);
     navigation.navigate('PlaceInfo', item)
   }
 
@@ -63,7 +58,7 @@ export default function SearchScreen({ navigation }) {
             data={history}
             renderItem={({ item }) => 
                 <TouchableOpacity
-                  onPress={(item) => {onSelect}}
+                  onPress={() => onSelect(item)}
                   style={{ backgroundColor: '#f9c2ff', flex:1}}>
                   <View style = {{flexDirection: 'row', width:'90%'}}>
                     <MaterialIcons name="place" size={24} color="black" />
