@@ -87,7 +87,8 @@ const styles = StyleSheet.create({
     },
     name: {
       fontWeight: "bold",
-      fontSize: 30
+      fontSize: 30,
+      color:'#274254'
     },
     job: {
       color: "#949494",
@@ -100,7 +101,10 @@ const styles = StyleSheet.create({
     },
     reservationsHeader: {
         fontSize: 36,
-        position: "relative"
+        position: "relative",
+        textAlign:'center',
+        color:'#274254',
+        paddingBottom:10,    
     },
     tableContainer: {
         ...Platform.select({
