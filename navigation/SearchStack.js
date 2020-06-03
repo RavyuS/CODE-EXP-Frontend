@@ -18,7 +18,16 @@ export default function SearchStackNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
-    <SearchStack.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+    <SearchStack.Navigator initialRouteName={INITIAL_ROUTE_NAME} 
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#233D4D',
+        },
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
       <SearchStack.Screen
         name="SearchInfo"
         component={SearchScreen}

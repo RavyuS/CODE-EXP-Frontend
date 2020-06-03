@@ -115,7 +115,6 @@ const PlaceInfoScreen = (props) => {
                     compoundCode={compoundCode}
                     date={dateQuery}
                     formSubmitState={{ formSubmitted, setFormSubmitted }}
-
                 />
             </View>
         </View>
@@ -254,7 +253,7 @@ const styles = StyleSheet.create({
         textAlign:'center'
     },
     scrollView: {
-        height: '85%',
+        height: '90%',
         
     }
 });

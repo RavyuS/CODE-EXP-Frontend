@@ -59,7 +59,7 @@ function SearchScreen({ navigation, reservations }) {
 
   const renderHeader = () => {
     return(
-      <Text style={styles.listTitle}> Past Searches </Text>
+      <Text style={styles.listTitle}> Your History </Text>
     )
   }
    
@@ -76,11 +76,12 @@ function SearchScreen({ navigation, reservations }) {
         <FlatList
           data={history}
           ItemSeparatorComponent = {renderSeparator}
+          ListHeaderComponent = {renderHeader}
           renderItem={({ item }) => 
               <TouchableOpacity
                 onPress={() => onSelect(item)}
                 style={styles.touchableOpacity}>
-                <MaterialIcons name="place" size={40} color="#EE964B" style={styles.icon} />
+                <MaterialIcons name="place" size={40} color="green" style={styles.icon} />
                 <View style = {{width:'90%', alignItems:'flex-start'}}>
                   <Text style={styles.name}>{item.name}</Text>
                   <Text style={styles.address}>{item.formattedAddress}</Text>
@@ -90,7 +91,7 @@ function SearchScreen({ navigation, reservations }) {
           keyExtractor={item => item.name}
         />
       </SafeAreaView>
-      <Text style={{color:'#233D4D',textAlign:'center', marginTop:-5}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
+      <Text style={styles.disclaimer}>Disclaimer: For demonstration purposes, we have pre-populated the above data. Please view them as they demonstrate the app best.</Text>
     </View>
   );
 }
@@ -124,8 +125,14 @@ const styles = StyleSheet.create({
     justifyContent : 'center',
     alignItems : 'baseline',
     flex: 0.5,
-    fontSize: 16,
+    fontSize: 19,
+    fontWeight : 'bold',
     paddingTop: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    // textDecorationLine : 'underline'
   },
   touchableOpacity : {
     flex:1,
@@ -142,6 +149,15 @@ const styles = StyleSheet.create({
   },
   icon : {
     alignSelf:'center',
+  },
+  disclaimer : {
+    color:'#233D4D',
+    textAlign:'center', 
+    marginTop:-5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 2,
   }
 });
 
