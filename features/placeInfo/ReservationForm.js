@@ -78,8 +78,8 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
     const onSubmit = () => {
         const startIndex = time.startTime.index
         const endIndex = time.endTime.index
-        if (endIndex < startIndex) setStatus('End time must be greater than start')
-        else if (pax === 0) setStatus('Set number of pax')
+        if (endIndex < startIndex) Alert.alert(null,'End time must be greater than start')
+        else if (pax === 0) Alert.alert(null,"Please set a number of pax")
         else {
             const element = [name, compoundCode, date, startIndex, endIndex, pax]
             // console.log('Generates Array: ', element)
