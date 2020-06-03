@@ -18,7 +18,6 @@ export default function SearchStackNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
-<<<<<<< HEAD
     <SearchStack.Navigator initialRouteName={INITIAL_ROUTE_NAME} 
       screenOptions={{
         headerStyle: {
@@ -29,9 +28,6 @@ export default function SearchStackNavigator({ navigation, route }) {
           fontWeight: 'bold',
         },
       }}>
-=======
-    <SearchStack.Navigator initialRouteName={INITIAL_ROUTE_NAME} screenOptions={{flex:1}}>
->>>>>>> 8199f03c182ce8b84586dbdf07070f32bfd2f632
       <SearchStack.Screen
         name="SearchInfo"
         component={SearchScreen}
