@@ -65,30 +65,26 @@ const PlaceInfoScreen = (props) => {
         <Text>Rendering</Text>
     )
     else return (
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 2 }}>
             <View style={{ flex: 1 }}>
-                <Text>{name}</Text>
-                <Text>{vicinity}</Text>
-                <Text>{date.toDateString()}</Text>
+                <View style={{ flex: 1 }}>
+                    <Text>{name}</Text>
+                    <Text>{vicinity}</Text>
+                    <Text>{date.toDateString()}</Text>
+                </View>
+                    <Text>Your reservations:</Text>
+                    <ReseservationList placeReservations={renderedData.placeReservations} />
+                    <SlotsBarChart barChartData={renderedData.barChartData} />
+                <ReservationForm
+                    placeSlotsArray={renderedData.placeSlotsArray}
+                    name={name}
+                    compoundCode={compoundCode}
+                    date={dateQuery}
+                    formSubmitState={{ formSubmitted, setFormSubmitted }}
+                />
             </View>
-            <ScrollView style={{ flex: 2 }}>
-                <Text>Your reservations:</Text>
-                <ReseservationList placeReservations={renderedData.placeReservations} />
-                <SlotsBarChart barChartData={renderedData.barChartData} />
-            </ScrollView>
-            <ReservationForm
-                placeSlotsArray={renderedData.placeSlotsArray}
-                name={name}
-                compoundCode={compoundCode}
-                date={dateQuery}
-                formSubmitState={{ formSubmitted, setFormSubmitted }}
-
-            />
-
-        </View>
+        </ScrollView>
     )
-
-
 }
 
 export default connect(mapStateToProps)(PlaceInfoScreen)
@@ -189,48 +185,13 @@ const SlotsBarChart = ({ barChartData }) => {
 }
 
 const styles = StyleSheet.create({
-    userInfo: {
-        flex: 1,
-        flexDirection: "row",
-        marginLeft: 30
-    },
-    avatarWrapper: {
-        flex: 2,
-        alignItems: "center",
-        justifyContent: "center",
-        marginBottom: 500
-    },
-    infoWrapper: {
-        flex: 2,
-        marginTop: 90
-    },
-    avatarImg: {
-        height: 120,
-        width: 120
-    },
-    name: {
-        fontWeight: "bold",
-        fontSize: 36
-    },
-    job: {
-        color: "#949494",
-    },
-    reservations: {
-        flex: 1,
-        position: "absolute",
-        top: 200,
-        justifyContent: "space-between"
-    },
-    reservationsHeader: {
-        fontSize: 36,
-        position: "relative"
-    },
     tableContainer: {
         ...Platform.select({
             ios: {
                 paddingTop: 20
             },
             android: {}
-        })
+        }),
+        padding: 30
     }
 });
