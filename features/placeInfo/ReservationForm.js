@@ -8,7 +8,8 @@ import moment from 'moment';
 // import { Dropdown } from 'react-native-material-dropdown';
 import PickerSelect from 'react-native-picker-select';
 // import { Button } from 'react-native-paper'
-import { ScrollView, View, Text, Button, StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 // import { useFonts } from '@use-expo/font';
 import { 
     useFonts,
@@ -27,6 +28,7 @@ import {
     JosefinSans_600SemiBold_Italic,
     JosefinSans_700Bold_Italic 
 } from '@expo-google-fonts/josefin-sans';
+import { TouchableHighlight } from 'react-native-gesture-handler'
 
 const mapStateToProps = state => ({
     email: state.account.email,
@@ -37,6 +39,7 @@ const mapDispatchToProps = { updateReservations }
 const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArray, compoundCode, date, name, formSubmitState }) => {
     let [fontsLoaded] = useFonts({
         JosefinSans_400Regular,
+        JosefinSans_700Bold,
     });
     const [time, setTime] = useState({
         startTime: { value: '0000', index: 0 },
@@ -110,27 +113,33 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
 
                 <View style={styles.inputContainer}>
                     <View style={styles.inputElement}>
-                        <Text>Pax</Text>
+                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 25 }}>Pax</Text>
                         <PickerSelect
+                            style={pickerStyle}
                             onValueChange={onPaxChange}
                             items={dropdownItems.paxDropdown}
+                            placeholder={{label: "No. of pax", value: null}}
                         />
                     </View>
 
                     <View style={styles.inputElement}>
-                        <Text>Start Time</Text>
+                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 25 }}>Start</Text>
                         <PickerSelect
+                            style={pickerStyle}
                             onValueChange={onStartTimeChange}
                             items={dropdownItems.timeDropdown}
+                            placeholder={{label: "Start time", value: null}}
                         />
                     </View>
 
 
                     <View style={styles.inputElement}>
-                        <Text>End Time</Text>
+                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 25 }}>End</Text>
                         <PickerSelect
+                            style={pickerStyle}
                             onValueChange={onEndTimeChange}
                             items={dropdownItems.timeDropdown}
+                            placeholder={{label: "End time", value: null}}
                         />
                     </View>
                 </View>
@@ -141,12 +150,17 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
                     </View>
 
                     <View style={styles.inputElement}>
-                        <Button
-                            style={styles.button}
-                            onPress={onSubmit}
-                            title="Submit"
-
-                        />
+                        {/* <TouchableHighlight style={styles.button}> */}
+                            <Button
+                                onPress={onSubmit}
+                                mode="contained"
+                                style={styles.button}
+                                // title="Submit"
+                                // color="white"
+                            >
+                                SUBMIT
+                            </Button>
+                        {/* </TouchableHighlight> */}
                     </View>
                 </View>
             </View>
@@ -168,7 +182,7 @@ const PaxRangeMessage = ({ time, placeSlotsArray }) => {
         const highestPax = Math.max(...slicedSlots)
         const lowestPax = Math.min(...slicedSlots)
         if (highestPax===lowestPax) return (<Text style={styles.expectText}>Expect about {highestPax} people.</Text>)
-        return (<Text style={styles.expectText}>Expect {lowestPax} to {highestPax} people</Text>)
+        return (<Text style={styles.expectText}>Expect {lowestPax} to {highestPax} people.</Text>)
     }
 }
 
@@ -193,18 +207,55 @@ const updateDatabase = updateData => {
     return Axios.post(`${apiURL}/api/locations`, updateData)
 }
 
+const pickerStyle = {
+	inputIOS: {
+		color: 'black',
+        marginTop: 5,
+        padding: 2,
+        width: 80,
+        borderRadius: 5,
+        backgroundColor: 'white',
+	},
+	inputAndroid: {
+		color: 'black',
+        marginTop: 5,
+        padding: 2,
+        width: 80,
+        borderRadius: 5,
+        backgroundColor: 'rgba(255, 235, 214, 0.8)'
+	},
+	// placeholderColor: 'white',
+	// underline: { borderTopWidth: 0 },
+	// icon: {
+	// 	// position: 'absolute',
+	// 	backgroundColor: 'black',
+	// 	borderTopWidth: 5,
+	// 	borderTopColor: '#00000099',
+	// 	borderRightWidth: 5,
+	// 	borderRightColor: 'transparent',
+	// 	borderLeftWidth: 5,
+	// 	borderLeftColor: 'transparent',
+	// 	width: 0,
+	// 	height: 0,
+	// 	top: 20,
+	// 	right: 15,
+	// },
+};
+
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'rgba(35, 61, 77, 0.45)',
-        padding: 20
+        padding: 20,
+        // justifyContent: "center"
     },
     inputContainer: {
         // flex: 2,
         flexDirection: "row",
-        alignContent: "space-around"
+        alignContent: "space-around",
+        justifyContent: "center"
     },
     inputElement: {
-        flex: 1
+        flex: 2
     },
     expect: {
         flex: 1,
@@ -212,7 +263,23 @@ const styles = StyleSheet.create({
     },
     expectText: {
         fontFamily: 'JosefinSans_400Regular',
-        fontSize: 20,
-        lineHeight: 25
+        fontSize: 25,
+        lineHeight: 25,
+        top: 7,
+        width:  250
+    },
+    selectItem: {
+        backgroundColor: 'white',
+        display: 'none'
+    },
+    button: {
+        backgroundColor: 'rgba(0, 0, 0, 0.38)',
+        color: 'white',
+        width: 100,
+        borderRadius: 10,
+        left: 130,
+        marginTop: 20,
+        // top: 10
+        // margin: 20
     }
 });
