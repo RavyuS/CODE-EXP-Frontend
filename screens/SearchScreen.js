@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useState } from 'react';
@@ -44,8 +44,8 @@ export default function SearchScreen({ navigation }) {
     }).catch(error => { console.log(error) }
     );
 
-  const onSelect = () => {
-    navigation.navigate('PlaceInfo', placeDetails)
+  const onSelect = (item) => {
+    navigation.navigate('PlaceInfo', item)
   }
 
   return (
@@ -57,30 +57,25 @@ export default function SearchScreen({ navigation }) {
         onChangeText={(value) => setSearchText(value)}
         onIconPress={_onSearch}
       />
-      <SafeAreaView style={{ flex: 12 }}>
-        <FlatList
-          data={history}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={onSelect}
-                style={[
-                  styles.listItem,
-                  { backgroundColor: '#f9c2ff' },
-                ]}
-              >
-                <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.address}>{item.formattedAddress}</Text>
-              </TouchableOpacity>
-            );
-          }
-          }
-          keyExtractor={item => item.id}
-        />
-        
-      </SafeAreaView>
-      <Text style={{color:'#233D4D',textAlign:'center'}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
-      
+      <Text style={styles.listTitle}> Past Searches </Text>
+        <SafeAreaView style={{flex:12}}>
+          <FlatList
+            data={history}
+            renderItem={({ item }) => 
+                <TouchableOpacity
+                  onPress={(item) => {onSelect}}
+                  style={{ backgroundColor: '#f9c2ff', flex:1}}>
+                  <View style = {{flexDirection: 'row', width:'90%'}}>
+                    <MaterialIcons name="place" size={24} color="black" />
+                    <Text style={styles.name}>{item.name}</Text>
+                  </View>
+                  <Text style={styles.address}>{item.formattedAddress}</Text>
+                </TouchableOpacity>
+            }
+            keyExtractor={item => item.id}
+          />
+        </SafeAreaView>
+        <Text style={{color:'#233D4D',textAlign:'center'}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
     </View>
   );
 }
@@ -100,12 +95,17 @@ const styles = StyleSheet.create({
     fontSize: 36
   },
   listItem: {
-    marginHorizontal: 32,
-    marginVertical: 10,
     display: 'flex',
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between'
+  },
+  listTitle: {
+    width : '100%',
+    textAlign : 'center',
+    justifyContent : 'center',
+    display: 'flex',
+    fontSize: 16,
+    paddingTop: 4,
   },
 });
 
