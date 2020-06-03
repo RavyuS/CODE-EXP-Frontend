@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -8,17 +8,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { useState } from 'react';
 import apiURL from '../constants/URLs'
+import { connect } from 'react-redux'
 
 import { MonoText } from '../components/StyledText';
 import store from '../state/store';
 import { TextInput, Searchbar, Button } from 'react-native-paper';
 
-function Item({ address, title, onSelect }) {
 
-}
+const mapStateToProps = state => ({ reservations: state.account.reservations })
 
-
-export default function SearchScreen({ navigation }) {
+function SearchScreen({ navigation, reservations }) {
   let placeDetails = {};
   // once we set up history in store, no need to declare placedetails early
   const [history, setHistory] = useState(preparedPlaces);
@@ -35,11 +34,14 @@ export default function SearchScreen({ navigation }) {
         setHistory(history => [placeDetails].concat(history));
       }
       navigation.navigate('PlaceInfo', placeDetails);
-    }).catch(error => { console.log(error) }
+    }).catch(error => { 
+      console.log(error)
+      Alert.alert('No results!','Please try another query!')
+    }
     );
 
   const onSelect = (item) => {
-    console.log(item);
+    console.log(reservations);
     navigation.navigate('PlaceInfo', item)
   }
 
@@ -53,31 +55,31 @@ export default function SearchScreen({ navigation }) {
         onIconPress={_onSearch}
       />
       <Text style={styles.listTitle}> Past Searches </Text>
-        <SafeAreaView style={{flex:12}}>
-          <FlatList
-            data={history}
-            renderItem={({ item }) => 
-                <TouchableOpacity
-                  onPress={() => onSelect(item)}
-                  style={{ backgroundColor: '#f9c2ff', flex:1}}>
-                  <View style = {{flexDirection: 'row', width:'90%'}}>
-                    <MaterialIcons name="place" size={24} color="black" />
-                    <Text style={styles.name}>{item.name}</Text>
-                  </View>
-                  <Text style={styles.address}>{item.formattedAddress}</Text>
-                </TouchableOpacity>
-            }
-            keyExtractor={item => item.id}
-          />
-        </SafeAreaView>
-        <Text style={{color:'#233D4D',textAlign:'center'}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
+      <SafeAreaView style={{flex:12}}>
+        <FlatList
+          data={history}
+          renderItem={({ item }) => 
+              <TouchableOpacity
+                onPress={() => onSelect(item)}
+                style={styles.touchableOpacity}>
+                <View style = {{flexDirection: 'row', width:'90%', alignItems:'center'}}>
+                  <MaterialIcons name="place" size={24} color="black" />
+                  <Text style={styles.name}>{item.name}</Text>
+                </View>
+                <Text style={styles.address}>{item.formattedAddress}</Text>
+              </TouchableOpacity>
+          }
+          keyExtractor={item => item.name}
+        />
+      </SafeAreaView>
+      <Text style={{color:'#233D4D',textAlign:'center'}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex : 1,
     backgroundColor: '#fff',
     padding: 10
   },
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "bold",
-    fontSize: 36
+    fontSize: 24
   },
   listItem: {
     display: 'flex',
@@ -98,12 +100,18 @@ const styles = StyleSheet.create({
     width : '100%',
     textAlign : 'center',
     justifyContent : 'center',
-    display: 'flex',
+    flex: 1,
     fontSize: 16,
     paddingTop: 4,
   },
+  touchableOpacity : {
+    backgroundColor: '#f9c2ff', 
+    flex:1,
+    padding:10
+  }
 });
 
+export default connect(mapStateToProps)(SearchScreen)
 
 const preparedPlaces = [
   {
