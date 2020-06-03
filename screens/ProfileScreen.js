@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
     name: {
       fontWeight: "bold",
-      fontSize: 36
+      fontSize: 30
     },
     job: {
       color: "#949494",

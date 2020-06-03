@@ -10,10 +10,33 @@ import LinkingConfiguration from './navigation/LinkingConfiguration'
 import LoginScreen from './screens/LoginScreen'
 import StartScreen from './screens/StartScreen';
 import RegisterScreen from './screens/RegisterScreen';
+
+import { 
+  useFonts,
+  JosefinSans_100Thin,
+  JosefinSans_200ExtraLight,
+  JosefinSans_300Light,
+  JosefinSans_400Regular,
+  JosefinSans_500Medium,
+  JosefinSans_600SemiBold,
+  JosefinSans_700Bold,
+  JosefinSans_100Thin_Italic,
+  JosefinSans_200ExtraLight_Italic,
+  JosefinSans_300Light_Italic,
+  JosefinSans_400Regular_Italic,
+  JosefinSans_500Medium_Italic,
+  JosefinSans_600SemiBold_Italic,
+  JosefinSans_700Bold_Italic 
+} from '@expo-google-fonts/josefin-sans';
+
 const Stack = createStackNavigator()
 
 export default function App() {
   const isLoadingComplete = useCachedResources()
+  let [fontsLoaded] = useFonts({
+    JosefinSans_400Regular,
+    JosefinSans_700Bold,
+  });
   // const isLoggedIn = store.getState().account.userID
   // const [login, setLogin] = React.useState(false)
   // console.log(`LOGGED IN? `, Boolean(isLoggedIn))
@@ -27,7 +50,7 @@ export default function App() {
 
             {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
 
-            <NavigationContainer linking={LinkingConfiguration}>
+            <NavigationContainer linking={LinkingConfiguration} style={styles.app}>
               <Stack.Navigator screenOptions={{headerShown:false}}>
                 <Stack.Screen name="Home" component={StartScreen} />
                 <Stack.Screen name="Login" component={LoginScreen} />
@@ -53,3 +76,9 @@ export default function App() {
     // }
   }
 }
+
+const styles = StyleSheet.create({
+  app: {
+    fontFamily : 'JosefinSans_400Regular'
+  }
+})

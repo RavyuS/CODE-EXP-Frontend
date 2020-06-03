@@ -78,7 +78,7 @@ const PlaceInfoScreen = (props) => {
     if (!renderedData) return (
         <Text>Rendering</Text>
     )
-    else return (
+    else if (fontsLoaded) return (
         <View >
             <View style={styles.scrollView}>
                 <ScrollView style={{ flex: 8 }}>

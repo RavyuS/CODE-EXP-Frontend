@@ -1,6 +1,6 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Divider, Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -18,6 +18,7 @@ import { TextInput, Searchbar, Button } from 'react-native-paper';
 const mapStateToProps = state => ({ reservations: state.account.reservations })
 
 function SearchScreen({ navigation, reservations }) {
+  
   let placeDetails = {};
   // once we set up history in store, no need to declare placedetails early
   const [history, setHistory] = useState(preparedPlaces);
@@ -45,6 +46,25 @@ function SearchScreen({ navigation, reservations }) {
     navigation.navigate('PlaceInfo', item)
   }
 
+  const renderSeparator = () => {
+    return (
+      <View
+        style={{
+          height: 1,
+          width: "86%",
+          backgroundColor: "#CED0CE",
+          marginLeft: "18%"
+        }}
+      />
+    );
+  };
+
+  const renderHeader = () => {
+    return(
+      <Text style={styles.listTitle}> Past Searches </Text>
+    )
+  }
+   
   return (
     <View style={styles.container}>
       <Searchbar
@@ -54,25 +74,25 @@ function SearchScreen({ navigation, reservations }) {
         onChangeText={(value) => setSearchText(value)}
         onIconPress={_onSearch}
       />
-      <Text style={styles.listTitle}> Past Searches </Text>
-      <SafeAreaView style={{flex:12}}>
+      <SafeAreaView style={styles.safeAreaView}>
         <FlatList
           data={history}
+          ItemSeparatorComponent = {renderSeparator}
           renderItem={({ item }) => 
               <TouchableOpacity
                 onPress={() => onSelect(item)}
                 style={styles.touchableOpacity}>
-                <View style = {{flexDirection: 'row', width:'90%', alignItems:'center'}}>
-                  <MaterialIcons name="place" size={24} color="black" />
+                <MaterialIcons name="place" size={40} color="green" style={styles.icon} />
+                <View style = {{width:'90%', alignItems:'flex-start'}}>
                   <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.address}>{item.formattedAddress}</Text>
                 </View>
-                <Text style={styles.address}>{item.formattedAddress}</Text>
               </TouchableOpacity>
           }
           keyExtractor={item => item.name}
         />
       </SafeAreaView>
-      <Text style={{color:'#233D4D',textAlign:'center'}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
+      <Text style={{color:'#233D4D',textAlign:'center', marginTop:-5}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
     </View>
   );
 }
@@ -81,33 +101,49 @@ const styles = StyleSheet.create({
   container: {
     flex : 1,
     backgroundColor: '#fff',
-    padding: 10
+    padding: 10,
   },
   search: {
-    padding: 0,
-    flex: 1,
+    flex: 2,
   },
   name: {
     fontWeight: "bold",
-    fontSize: 24
+    fontSize: 24,
+    marginLeft : 22
+  },
+  address: {
+    fontSize: 16,
+    marginLeft : 22
   },
   listItem: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   listTitle: {
-    width : '100%',
+    height : '100%',
     textAlign : 'center',
     justifyContent : 'center',
-    flex: 1,
+    alignItems : 'baseline',
+    flex: 0.5,
     fontSize: 16,
     paddingTop: 4,
   },
   touchableOpacity : {
-    backgroundColor: '#f9c2ff', 
     flex:1,
-    padding:10
+    flexDirection : 'row',
+    justifyContent:'flex-start',
+    padding:10,
+    marginVertical : 10,
+  },
+  safeAreaView : {
+    flex : 15,
+    marginTop : -40,
+    marginBottom : -20,
+    color: "#233D4D",
+  },
+  icon : {
+    alignSelf:'center',
   }
 });
 
