@@ -135,13 +135,19 @@ const ReseservationList = ({ placeReservations }) => {
             title: 'Reserved',
             dataIndex: 'reserved',
             width: 100
-        }
+        },
+        {
+            title: 'Num',
+            dataIndex: 'number',
+            width: 40
+        },
     ];
     if (placeReservations[0]) {
         const dataSource = placeReservations.map((el) => ({
             'location': el[0],
             'date': el[2],
-            'reserved': Utils.getTimeRange(el[3], el[4])
+            'reserved': Utils.getTimeRange(el[3], el[4]),
+            'number': el[5]
         }))
 
         return (
