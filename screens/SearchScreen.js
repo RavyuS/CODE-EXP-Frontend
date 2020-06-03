@@ -28,7 +28,7 @@ export default function SearchScreen({ navigation }) {
   const [history, setHistory] = useState(preparedPlaces);
   const [searchText, setSearchText] = useState("")
 
-  _onSearch = () => axios.get(`${apiURL}/api/googleapi?name=${searchText}`)
+  const _onSearch = () => axios.get(`${apiURL}/api/googleapi?name=${searchText}`)
     .then(res => {
       console.log(res);
       placeDetails = {
@@ -44,7 +44,7 @@ export default function SearchScreen({ navigation }) {
     }).catch(error => { console.log(error) }
     );
 
-  onSelect = () => {
+  const onSelect = () => {
     navigation.navigate('PlaceInfo', placeDetails)
   }
 
@@ -55,7 +55,7 @@ export default function SearchScreen({ navigation }) {
         placeholder="Search for a location"
         icon={() => <MaterialCommunityIcons name="map-search" size={30} />}
         onChangeText={(value) => setSearchText(value)}
-        onIconPress={this._onSearch}
+        onIconPress={_onSearch}
       />
       <SafeAreaView style={{ flex: 12 }}>
         <FlatList
@@ -63,7 +63,7 @@ export default function SearchScreen({ navigation }) {
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
-                onPress={this.onSelect}
+                onPress={onSelect}
                 style={[
                   styles.listItem,
                   { backgroundColor: '#f9c2ff' },
@@ -77,7 +77,10 @@ export default function SearchScreen({ navigation }) {
           }
           keyExtractor={item => item.id}
         />
+        
       </SafeAreaView>
+      <Text style={{color:'#233D4D',textAlign:'center'}}>The above list is supposed to represent a user's search history. However, for demonstration, we use a predefined list of places. Please view them as they demonstrate the app best.</Text>
+      
     </View>
   );
 }

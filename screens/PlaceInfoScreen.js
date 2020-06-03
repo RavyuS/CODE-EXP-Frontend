@@ -86,7 +86,7 @@ const PlaceInfoScreen = (props) => {
                         <Text style={styles.name}>{name}</Text>
                         <Text style={styles.address}>{formattedAddress}</Text>
                         {/* <Text>{date.toDateString()}</Text> */}
-                        
+                        <View style={{padding:10}}/>
                         <Button onPress={()=>setShowCalendar(true)} mode='contained' style={{marginLeft:'auto',marginRight:'auto'}} color='#233D4D'>
                             {date.toDateString()}
                         </Button>
@@ -102,9 +102,10 @@ const PlaceInfoScreen = (props) => {
                         />)}
 
                     </View>
+                    <SlotsBarChart barChartData={renderedData.barChartData} />
                     <Text style={styles.reservationsHeader}>Your reservations:</Text>
                     <ReseservationList placeReservations={renderedData.placeReservations} />
-                    <SlotsBarChart barChartData={renderedData.barChartData} />
+                    
                 </ScrollView>
             </View>
             <View style={{ flex: 5 }}>
@@ -137,7 +138,7 @@ export default connect(mapStateToProps)(PlaceInfoScreen)
 const slotsToData = (placeArray) => {
     let data = []
 
-    for (let i = 8; i < 22; i++) {
+    for (let i = 0; i < 24; i++) {
         const index = i * 2
         let value
         placeArray[index] > placeArray[index + 1] ? value = placeArray[index] : value = placeArray[index + 1]
@@ -207,7 +208,7 @@ const SlotsBarChart = ({ barChartData }) => {
                 data={barChartData}
                 horizontal={true}
                 yAccessor={({ item }) => item.value}
-                svg={{ fill: 'rgba(134, 65, 244, 0.8)' }}
+                svg={{ fill: '#EE964B' }}
                 contentInset={{ top: 10, bottom: 10 }}
                 spacing={0.2}
                 gridMin={0}
@@ -238,7 +239,8 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontStyle: "italic",
         color: "darkgrey",
-        fontSize: 16
+        fontSize: 16,
+
     },
     reservationsHeader: {
         fontSize: 24,
