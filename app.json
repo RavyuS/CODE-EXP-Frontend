@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "code-exp-frontend",
+    "name": "SafeLah!",
     "slug": "code-exp-frontend",
     "platforms": [
       "ios",
@@ -9,10 +9,10 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/logo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

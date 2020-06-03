@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   },
   search: {
     flex: 2,
+    
   },
   name: {
     fontWeight: "bold",
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   },
   safeAreaView : {
     flex : 15,
-    marginTop : -40,
+    // marginTop : -10,
     marginBottom : -20,
     color: "#233D4D",
   },
@@ -159,6 +160,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.4,
     shadowRadius: 2,
+    backgroundColor:'#EE964B'
   }
 });
 
