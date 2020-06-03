@@ -8,7 +8,25 @@ import moment from 'moment';
 // import { Dropdown } from 'react-native-material-dropdown';
 import PickerSelect from 'react-native-picker-select';
 // import { Button } from 'react-native-paper'
-import { ScrollView, View, Text, Button } from 'react-native'
+import { ScrollView, View, Text, Button, StyleSheet } from 'react-native';
+// import { useFonts } from '@use-expo/font';
+import { 
+    useFonts,
+    JosefinSans_100Thin,
+    JosefinSans_200ExtraLight,
+    JosefinSans_300Light,
+    JosefinSans_400Regular,
+    JosefinSans_500Medium,
+    JosefinSans_600SemiBold,
+    JosefinSans_700Bold,
+    JosefinSans_100Thin_Italic,
+    JosefinSans_200ExtraLight_Italic,
+    JosefinSans_300Light_Italic,
+    JosefinSans_400Regular_Italic,
+    JosefinSans_500Medium_Italic,
+    JosefinSans_600SemiBold_Italic,
+    JosefinSans_700Bold_Italic 
+} from '@expo-google-fonts/josefin-sans';
 
 const mapStateToProps = state => ({
     email: state.account.email,
@@ -17,6 +35,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = { updateReservations }
 
 const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArray, compoundCode, date, name, formSubmitState }) => {
+    let [fontsLoaded] = useFonts({
+        JosefinSans_400Regular,
+    });
     const [time, setTime] = useState({
         startTime: { value: '0000', index: 0 },
         endTime: { value: '0030', index: 1 }
@@ -80,31 +101,54 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
         }
     }
 
-    if (dropdownItems.timeDropdown) {
+    if (dropdownItems.timeDropdown && fontsLoaded) {
         return (
-            <View style={{ flex: 3 }} >
-                {status ? <Text>{status}</Text> : null}
-                <Text>Start Time</Text>
-                <PickerSelect
-                    onValueChange={onStartTimeChange}
-                    items={dropdownItems.timeDropdown}
-                />
-                <Text>End Time</Text>
-                <PickerSelect
-                    onValueChange={onEndTimeChange}
-                    items={dropdownItems.timeDropdown}
-                />
-                <Text>No. of Pax</Text>
-                <PickerSelect
-                    onValueChange={onPaxChange}
-                    items={dropdownItems.paxDropdown}
-                />
-                <View><PaxRangeMessage time={time} placeSlotsArray={placeSlotsArray} /></View>
-                <Button
-                    onPress={onSubmit}
-                    title="Submit"
+            <View style={styles.container} >
+                {/* below line is weird, get a better lib? */}
+                {status ? <Text>{status}</Text> : null} 
 
-                />
+
+                <View style={styles.inputContainer}>
+                    <View style={styles.inputElement}>
+                        <Text>Pax</Text>
+                        <PickerSelect
+                            onValueChange={onPaxChange}
+                            items={dropdownItems.paxDropdown}
+                        />
+                    </View>
+
+                    <View style={styles.inputElement}>
+                        <Text>Start Time</Text>
+                        <PickerSelect
+                            onValueChange={onStartTimeChange}
+                            items={dropdownItems.timeDropdown}
+                        />
+                    </View>
+
+
+                    <View style={styles.inputElement}>
+                        <Text>End Time</Text>
+                        <PickerSelect
+                            onValueChange={onEndTimeChange}
+                            items={dropdownItems.timeDropdown}
+                        />
+                    </View>
+                </View>
+
+                <View style={styles.inputContainer}>
+                    <View style={styles.expect}>
+                        <PaxRangeMessage time={time} placeSlotsArray={placeSlotsArray} />
+                    </View>
+
+                    <View style={styles.inputElement}>
+                        <Button
+                            style={styles.button}
+                            onPress={onSubmit}
+                            title="Submit"
+
+                        />
+                    </View>
+                </View>
             </View>
         )
     }
@@ -123,8 +167,8 @@ const PaxRangeMessage = ({ time, placeSlotsArray }) => {
         const slicedSlots = placeSlotsArray.slice(startIndex, endIndex + 1)
         const highestPax = Math.max(...slicedSlots)
         const lowestPax = Math.min(...slicedSlots)
-        if (highestPax===lowestPax) return (<Text>Expect about {highestPax} people.</Text>)
-        return (<Text>Expect {lowestPax} to {highestPax} people</Text>)
+        if (highestPax===lowestPax) return (<Text style={styles.expectText}>Expect about {highestPax} people.</Text>)
+        return (<Text style={styles.expectText}>Expect {lowestPax} to {highestPax} people</Text>)
     }
 }
 
@@ -148,3 +192,27 @@ const updateDatabase = updateData => {
     // const { areaCode,placeCode,date,startIndex,endIndex,increment} = updateData
     return Axios.post(`${apiURL}/api/locations`, updateData)
 }
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'rgba(35, 61, 77, 0.45)',
+        padding: 20
+    },
+    inputContainer: {
+        // flex: 2,
+        flexDirection: "row",
+        alignContent: "space-around"
+    },
+    inputElement: {
+        flex: 1
+    },
+    expect: {
+        flex: 1,
+        marginTop: 20
+    },
+    expectText: {
+        fontFamily: 'JosefinSans_400Regular',
+        fontSize: 20,
+        lineHeight: 25
+    }
+});

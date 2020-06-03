@@ -65,25 +65,27 @@ const PlaceInfoScreen = (props) => {
         <Text>Rendering</Text>
     )
     else return (
-        <ScrollView style={{ flex: 2 }}>
-            <View style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
-                    <Text>{name}</Text>
-                    <Text>{vicinity}</Text>
-                    <Text>{date.toDateString()}</Text>
-                </View>
+        <View style={{ flex: 1 }}>
+            <View style={styles.scrollView}>
+                <ScrollView style={{ flex: 2 }}>
+                    <View style={{ flex: 1 }}>
+                        <Text>{name}</Text>
+                        <Text>{vicinity}</Text>
+                        <Text>{date.toDateString()}</Text>
+                    </View>
                     <Text>Your reservations:</Text>
                     <ReseservationList placeReservations={renderedData.placeReservations} />
                     <SlotsBarChart barChartData={renderedData.barChartData} />
-                <ReservationForm
-                    placeSlotsArray={renderedData.placeSlotsArray}
-                    name={name}
-                    compoundCode={compoundCode}
-                    date={dateQuery}
-                    formSubmitState={{ formSubmitted, setFormSubmitted }}
-                />
+                </ScrollView>
             </View>
-        </ScrollView>
+            <ReservationForm
+                placeSlotsArray={renderedData.placeSlotsArray}
+                name={name}
+                compoundCode={compoundCode}
+                date={dateQuery}
+                formSubmitState={{ formSubmitted, setFormSubmitted }}
+            />
+            </View>
     )
 }
 
@@ -193,5 +195,8 @@ const styles = StyleSheet.create({
             android: {}
         }),
         padding: 30
+    },
+    scrollView: {
+        height: '85%'
     }
 });
