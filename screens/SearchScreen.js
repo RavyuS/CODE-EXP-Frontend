@@ -71,6 +71,7 @@ function SearchScreen({ navigation, reservations }) {
         icon={() => <MaterialCommunityIcons name="map-search" size={30} />}
         onChangeText={(value) => setSearchText(value)}
         onIconPress={_onSearch}
+        onSubmitEditing={_onSearch}
       />
       <SafeAreaView style={styles.safeAreaView}>
         <FlatList
