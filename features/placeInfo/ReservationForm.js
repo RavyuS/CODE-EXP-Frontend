@@ -251,6 +251,12 @@ const pickerStyle = {
 
 const styles = StyleSheet.create({
     container: {
+        ...Platform.select({
+            ios: {
+                marginTop: 65
+            },
+            android: {}
+        }),
         backgroundColor: 'rgba(35, 61, 77, 0.45)',
         padding: 20,
         marginBottom: -30,
