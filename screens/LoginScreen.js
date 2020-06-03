@@ -23,7 +23,7 @@ const LoginScreen = ({ navigation, setAccountDetails }) => {
   const _onLoginPressed = () => {
     attemptLogin(email.value, password.value)
       .then(resp => {
-        console.log(resp.data)
+        // console.log(resp.data)
         if (resp.status === 200) setAccountDetails(resp.data)
         // setEmail('')
         setPassword('')

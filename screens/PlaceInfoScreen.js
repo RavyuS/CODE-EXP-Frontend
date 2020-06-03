@@ -3,10 +3,13 @@ import { connect } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import apiURL from '../constants/URLs'
-import { ScrollView, View, Text } from 'react-native'
+import { ScrollView, View, Text, Button, StyleSheet } from 'react-native'
 import { BarChart, YAxis, Grid } from 'react-native-svg-charts'
 import * as scale from 'd3-scale'
 import Utils from '../utils'
+import ReservationForm from '../features/placeInfo/ReservationForm'
+import Table from 'react-native-simple-table';
+// import { Button } from 'react-native-paper'
 const mapStateToProps = state => ({ reservations: state.account.reservations })
 
 
@@ -15,37 +18,36 @@ const PlaceInfoScreen = (props) => {
 
     const { reservations, navigation } = props
     const { compoundCode, name, vicinity } = props.route.params // example compound code "9V2C+CQ Singapore"
-    const [areaCode, restOfCode] = compoundCode.split('+') // splits compound code using "+". rest contains shop code + area info (eg., CQ Singapore), so we need to split it a second time
-    const [placeCode] = restOfCode.split(' ')
+
+    const { areaCode, placeCode } = Utils.splitCompoundCode(compoundCode)
 
     const [date, setDate] = useState(new Date()) // always make sure u setDate with a DDMMYYYY string representation of the date
     const dateQuery = Utils.toDDMMYYYY(date) //for queries since we store date in DDMMYYYY
     const [renderedData, setRenderedData] = useState('')
+    const [formSubmitted, setFormSubmitted] = useState(0)
 
     useEffect(() => {
         Axios.get(`${apiURL}/api/locations?areaCode=${areaCode}&date=${dateQuery}`)
             .then(resp => {
-                // DATA LOAD CODE
-                // console.log(resp.data.Item)
-                // console.log(resp.data)
-                const placesObject = resp.data.Item.places
+                let placesObject = {}
+                resp.data.Item ? placesObject = resp.data.Item.places : null
                 let areaSlotArray = Array.from({ length: 48 }).fill(0) //initialize with 48 0s
                 const placeSlotsArray = placesObject[placeCode] || Array.from({ length: 48 }).fill(0) //if Place is not in item, then generate an array with 48 indexes
-                for (const placeSlots in placesObject) {
-                    placesObject[placeSlots].forEach((slot, index) => areaSlotArray[index] += slot)
+                if (placesObject.Item) {
+                    for (const placeSlots in placesObject) {
+                        placesObject[placeSlots].forEach((slot, index) => areaSlotArray[index] += slot)
+                    }
                 }
-                
-                // check if any reservations where made in this place
-                console.log(reservations)
-                console.log("HERE")
-                if (reservations[0]) {
-                    const placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
+                let placeReservations = []
+
+                if (reservations) {
+                    placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
                 }
-                else placeReservations = []
-                
+
+                // console.log(placeReservations)
                 const barChartData = slotsToData(placeSlotsArray)
-                console.log(barChartData)
-                console.log("last part before rerender")
+                // console.log(placeSlotsArray)
+                // console.log("last part before rerender")
                 setRenderedData({
                     placeSlotsArray,
                     areaSlotArray,
@@ -58,20 +60,30 @@ const PlaceInfoScreen = (props) => {
                 //Error Code
                 //if item doesn't exist (aka 404 code returned)
             })
-    }, [compoundCode, date]) //will only update if compoundCode or date changes, and will refresh when after a form is submitted
+    }, [compoundCode, date, formSubmitted]) //will only update if compoundCode or date changes, and will refresh when after a form is submitted
     if (!renderedData) return (
         <Text>Rendering</Text>
     )
     else return (
         <View style={{ flex: 1 }}>
-            <Text>{name}</Text>
-            <Text>{vicinity}</Text>
-            <Text>{date.toDateString()}</Text>
-            <ScrollView>
+            <View style={{ flex: 1 }}>
+                <Text>{name}</Text>
+                <Text>{vicinity}</Text>
+                <Text>{date.toDateString()}</Text>
+            </View>
+            <ScrollView style={{ flex: 2 }}>
                 <Text>Your reservations:</Text>
                 <ReseservationList placeReservations={renderedData.placeReservations} />
                 <SlotsBarChart barChartData={renderedData.barChartData} />
             </ScrollView>
+            <ReservationForm
+                placeSlotsArray={renderedData.placeSlotsArray}
+                name={name}
+                compoundCode={compoundCode}
+                date={dateQuery}
+                formSubmitState={{ formSubmitted, setFormSubmitted }}
+
+            />
 
         </View>
     )
@@ -88,25 +100,43 @@ export default connect(mapStateToProps)(PlaceInfoScreen)
  * @param {Date} date 
  */
 
- 
+
 
 
 // Consolidates data in hourly windows for BarChart to render hours between 0800H to 2200H
 const slotsToData = (placeArray) => {
     let data = []
 
-    for (let i = 7; i < 21; i++) {
-        const index = i * 2 + 1
+    for (let i = 8; i < 22; i++) {
+        const index = i * 2 
         let value
         placeArray[index] > placeArray[index + 1] ? value = placeArray[index] : value = placeArray[index + 1]
-        data.push({ value, label: `${i + 1}:00` })
+        data.push({ value, label: `${i}:00` })
     }
     // console.log(data)
     return data;
 
 }
 
-const ReseservationList = ({placeReservations}) => {
+const ReseservationList = ({ placeReservations }) => {
+    // console.log(placeReservations[0])
+    const columns = [
+        {
+            title: 'Location',
+            dataIndex: 'location',
+            width: 130
+        },
+        {
+            title: 'Date',
+            dataIndex: 'date',
+            width: 100
+        },
+        {
+            title: 'Reserved',
+            dataIndex: 'reserved',
+            width: 100
+        }
+    ];
     if (placeReservations[0]) {
         const dataSource = placeReservations.map((el) => ({
             'location': el[0],
@@ -147,8 +177,54 @@ const SlotsBarChart = ({ barChartData }) => {
                 gridMin={0}
             />
 
-            
+
         </View>
     )
 }
 
+const styles = StyleSheet.create({
+    userInfo: {
+        flex: 1,
+        flexDirection: "row",
+        marginLeft: 30
+    },
+    avatarWrapper: {
+        flex: 2,
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: 500
+    },
+    infoWrapper: {
+        flex: 2,
+        marginTop: 90
+    },
+    avatarImg: {
+        height: 120,
+        width: 120
+    },
+    name: {
+        fontWeight: "bold",
+        fontSize: 36
+    },
+    job: {
+        color: "#949494",
+    },
+    reservations: {
+        flex: 1,
+        position: "absolute",
+        top: 200,
+        justifyContent: "space-between"
+    },
+    reservationsHeader: {
+        fontSize: 36,
+        position: "relative"
+    },
+    tableContainer: {
+        ...Platform.select({
+            ios: {
+                paddingTop: 20
+            },
+            android: {}
+        })
+    }
+});

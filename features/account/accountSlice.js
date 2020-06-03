@@ -6,7 +6,7 @@ const accountSlice = createSlice({
 	reducers : {
 		setAccountDetails: (state, action) => {
             const {email,name,reservations} = action.payload
-            console.log("STATE IN REDUCE ",state)
+            // console.log("STATE IN REDUCE ",state)
             return {email,name,reservations}  
 		},
 		updateReservations: (state, action) => { // action.payload is reservations array

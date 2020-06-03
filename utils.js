@@ -47,4 +47,9 @@ export default class Utils {
         // console.log(stringDate)
         return stringDate
     }
+    static splitCompoundCode = compoundCode =>{
+        const [areaCode, restOfCode] = compoundCode.split('+') // splits compound code using "+". rest contains shop code + area info (eg., CQ Singapore), so we need to split it a second time
+        const [placeCode] = restOfCode.split(' ')
+        return {areaCode, placeCode}
+    }
 }
