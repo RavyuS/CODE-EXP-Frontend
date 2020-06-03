@@ -32,7 +32,7 @@ export default function SearchScreen({ navigation }) {
 
   _onSearch = () => axios.get(`${apiURL}/api/googleapi?name=${searchText}`)
     .then(res =>{
-      // console.log(res);
+      console.log(res);
       placeDetails = { 
         compoundCode : res.data.candidates[0].plus_code.compound_code,
         formattedAddress : res.data.candidates[0].formatted_address,

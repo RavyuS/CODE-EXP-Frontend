@@ -38,7 +38,7 @@
     "react-native-screens": "~2.2.0",
     "react-native-simple-table": "0.0.3",
     "react-native-status-bar-height": "^2.5.0",
-    "react-native-svg": "11.0.1",
+    "react-native-svg": "^11.0.1",
     "react-native-svg-charts": "https://github.com/RavyuS/react-native-svg-charts/archive/v5.3.1.tar.gz",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
