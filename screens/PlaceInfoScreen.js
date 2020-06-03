@@ -3,12 +3,17 @@ import { connect } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import apiURL from '../constants/URLs'
-import { ScrollView, View, Text, Button, StyleSheet } from 'react-native'
+import { ScrollView, View, Text, StyleSheet, useWindowDimensions } from 'react-native'
+
 import { BarChart, YAxis, Grid } from 'react-native-svg-charts'
 import * as scale from 'd3-scale'
 import Utils from '../utils'
 import ReservationForm from '../features/placeInfo/ReservationForm'
 import Table from 'react-native-simple-table';
+import { Colors } from 'react-native/Libraries/NewAppScreen'
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Button } from 'react-native-paper';
+
 // import { Button } from 'react-native-paper'
 const mapStateToProps = state => ({ reservations: state.account.reservations })
 
@@ -17,14 +22,23 @@ const mapStateToProps = state => ({ reservations: state.account.reservations })
 const PlaceInfoScreen = (props) => {
 
     const { reservations, navigation } = props
-    const { compoundCode, name, vicinity } = props.route.params // example compound code "9V2C+CQ Singapore"
-
+    const { compoundCode, name, formattedAddress } = props.route.params // example compound code "9V2C+CQ Singapore"
+    const windowWidth = useWindowDimensions().width
+    const windowHeight = useWindowDimensions().height
     const { areaCode, placeCode } = Utils.splitCompoundCode(compoundCode)
-
+    const [showCalendar, setShowCalendar]=useState(false)
     const [date, setDate] = useState(new Date()) // always make sure u setDate with a DDMMYYYY string representation of the date
     const dateQuery = Utils.toDDMMYYYY(date) //for queries since we store date in DDMMYYYY
+    
+    console.log(date)
     const [renderedData, setRenderedData] = useState('')
     const [formSubmitted, setFormSubmitted] = useState(0)
+
+    const calendarSetDate = (event, date) => {
+        setShowCalendar(false)
+        date ? setDate(date):null
+        
+    }
 
     useEffect(() => {
         Axios.get(`${apiURL}/api/locations?areaCode=${areaCode}&date=${dateQuery}`)
@@ -43,7 +57,7 @@ const PlaceInfoScreen = (props) => {
                 if (reservations) {
                     placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
                 }
-
+                
                 // console.log(placeReservations)
                 const barChartData = slotsToData(placeSlotsArray)
                 // console.log(placeSlotsArray)
@@ -65,27 +79,45 @@ const PlaceInfoScreen = (props) => {
         <Text>Rendering</Text>
     )
     else return (
-        <View style={{ flex: 1 }}>
+        <View >
             <View style={styles.scrollView}>
-                <ScrollView style={{ flex: 2 }}>
-                    <View style={{ flex: 1 }}>
-                        <Text>{name}</Text>
-                        <Text>{vicinity}</Text>
-                        <Text>{date.toDateString()}</Text>
+                <ScrollView style={{ flex: 8 }}>
+                    <View style={{flex:1}}>
+                        <Text style={styles.name}>{name}</Text>
+                        <Text style={styles.address}>{formattedAddress}</Text>
+                        {/* <Text>{date.toDateString()}</Text> */}
+                        
+                        <Button onPress={()=>setShowCalendar(true)} mode='contained' style={{marginLeft:'auto',marginRight:'auto'}} color='#233D4D'>
+                            {date.toDateString()}
+                        </Button>
+                        
+                        {showCalendar && (<DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode={"date"}
+                            is24Hour={true}
+                            display="default"
+                            minimumDate={new Date()}
+                            onChange={calendarSetDate}
+                        />)}
+
                     </View>
-                    <Text>Your reservations:</Text>
+                    <Text style={styles.reservationsHeader}>Your reservations:</Text>
                     <ReseservationList placeReservations={renderedData.placeReservations} />
                     <SlotsBarChart barChartData={renderedData.barChartData} />
                 </ScrollView>
             </View>
-            <ReservationForm
-                placeSlotsArray={renderedData.placeSlotsArray}
-                name={name}
-                compoundCode={compoundCode}
-                date={dateQuery}
-                formSubmitState={{ formSubmitted, setFormSubmitted }}
-            />
+            <View style={{ flex: 5 }}>
+                <ReservationForm
+                    placeSlotsArray={renderedData.placeSlotsArray}
+                    name={name}
+                    compoundCode={compoundCode}
+                    date={dateQuery}
+                    formSubmitState={{ formSubmitted, setFormSubmitted }}
+
+                />
             </View>
+        </View>
     )
 }
 
@@ -106,7 +138,7 @@ const slotsToData = (placeArray) => {
     let data = []
 
     for (let i = 8; i < 22; i++) {
-        const index = i * 2 
+        const index = i * 2
         let value
         placeArray[index] > placeArray[index + 1] ? value = placeArray[index] : value = placeArray[index + 1]
         data.push({ value, label: `${i}:00` })
@@ -143,7 +175,7 @@ const ReseservationList = ({ placeReservations }) => {
     if (placeReservations[0]) {
         const dataSource = placeReservations.map((el) => ({
             'location': el[0],
-            'date': el[2][0]+el[2][1]+'/'+el[2][2]+el[2][3]+'/'+el[2][4]+el[2][5]+el[2][6]+el[2][7],
+            'date': el[2][0] + el[2][1] + '/' + el[2][2] + el[2][3] + '/' + el[2][4] + el[2][5] + el[2][6] + el[2][7],
             'reserved': Utils.getTimeRange(el[3], el[4]),
             'number': el[5]
         }))
@@ -196,7 +228,31 @@ const styles = StyleSheet.create({
         }),
         padding: 30
     },
+    name: {
+        fontWeight: "bold",
+        fontSize: 36,
+        textAlign: "center",
+        color: "#233D4D"
+    },
+    address: {
+        textAlign: "center",
+        fontStyle: "italic",
+        color: "darkgrey",
+        fontSize: 16
+    },
+    reservationsHeader: {
+        fontSize: 24,
+        position: "relative",
+        fontWeight: "bold",
+        color: "#233D4D"
+    },
+    calendarButton:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        textAlign:'center'
+    },
     scrollView: {
-        height: '82%'
+        height: '85%',
+        
     }
 });

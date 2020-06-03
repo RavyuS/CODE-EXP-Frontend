@@ -31,7 +31,7 @@ export default function SearchStackNavigator({ navigation, route }) {
         name="PlaceInfo"
         component={PlaceInfoScreen}
         options={{
-            title: 'PlaceInfo',
+            title: 'Place Information',
         }}
         >
       </SearchStack.Screen>

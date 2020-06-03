@@ -9,7 +9,9 @@ import moment from 'moment';
 import PickerSelect from 'react-native-picker-select';
 // import { Button } from 'react-native-paper'
 import { Button } from 'react-native-paper';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+
+
+import { ScrollView, View, Text, StyleSheet, Alert } from 'react-native';
 // import { useFonts } from '@use-expo/font';
 import { 
     useFonts,
@@ -49,6 +51,7 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
     const [dropdownItems, setDropdownItems] = useState({})
     const [status, setStatus] = useState('')
     const {formSubmitted,setFormSubmitted } = formSubmitState
+
     // const [fakeItems, setFakeItems ] = useState('')
     // const {placeSlotsArray, compoundCode, date, name} = fakeItems
     useEffect(() => { // First time rendering
@@ -96,6 +99,7 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
                     //     startTime: { value: "0000", index: 0 },
                     //     endTime: { value: "0030", index: 1 }
                     // })
+                    Alert.alert("Reservation submitted!","Your information will help others make their decisions!")
                     setStatus("successfully updated")
                     setFormSubmitted(formSubmitted+1)
                 }) //note that pax is increment in endpoint
@@ -108,12 +112,12 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
         return (
             <View style={styles.container} >
                 {/* below line is weird, get a better lib? */}
-                {status ? <Text>{status}</Text> : null} 
+               
 
 
                 <View style={styles.inputContainer}>
                     <View style={styles.inputElement}>
-                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 25 }}>Pax</Text>
+                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 20 }}>Pax</Text>
                         <PickerSelect
                             style={pickerStyle}
                             onValueChange={onPaxChange}
@@ -123,7 +127,7 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
                     </View>
 
                     <View style={styles.inputElement}>
-                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 25 }}>Start</Text>
+                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 20 }}>Start</Text>
                         <PickerSelect
                             style={pickerStyle}
                             onValueChange={onStartTimeChange}
@@ -134,7 +138,7 @@ const ReservationForm = ({ email,reservations, updateReservations, placeSlotsArr
 
 
                     <View style={styles.inputElement}>
-                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 25 }}>End</Text>
+                        <Text style={{ fontFamily: 'JosefinSans_700Bold', fontSize: 20 }}>End</Text>
                         <PickerSelect
                             style={pickerStyle}
                             onValueChange={onEndTimeChange}
@@ -263,7 +267,7 @@ const styles = StyleSheet.create({
     },
     expectText: {
         fontFamily: 'JosefinSans_400Regular',
-        fontSize: 25,
+        fontSize: 15,
         lineHeight: 25,
         top: 7,
         width:  250
@@ -273,7 +277,7 @@ const styles = StyleSheet.create({
         display: 'none'
     },
     button: {
-        backgroundColor: 'rgba(0, 0, 0, 0.38)',
+        backgroundColor: '#233D4D',
         color: 'white',
         width: 100,
         borderRadius: 10,
