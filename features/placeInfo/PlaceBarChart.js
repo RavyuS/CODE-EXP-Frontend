@@ -2,19 +2,21 @@ import { BarChart, YAxis, Grid, XAxis } from 'react-native-svg-charts'
 import * as scale from 'd3-scale'
 import { View, useWindowDimensions, Text } from 'react-native'
 import React from 'react'
+import moment from 'moment';
+import utils from '../../utils'
 
 export default ({ placeSlotsArray, predict }) => {
     const axesSvg = { fontSize: 10, fill: 'grey' };
     const verticalContentInset = { top: 10, bottom: 10 }
-    const xAxisHeight = 30
+    const xAxisHeight = 0
     let data
     const YAxisData = [...placeSlotsArray, 0]
     predict ? data = predictorArrayGenerate(placeSlotsArray) : data = placeSlotsArray.map(ele=>({value:ele,svg:{fill: '#EE964B', strokeWidth: 2}}))
-    console.log(data[5].data)
+    console.log(getTimeIndex())
 
     return (
         <>
-        <View style={{ height: useWindowDimensions().height * 0.50, padding: 20, flexDirection: 'row' }}>
+        <View style={{ height: useWindowDimensions().height * 0.30, padding: 20, flexDirection: 'row' }}>
             <YAxis
                 data={YAxisData}
                 style={{ marginBottom: xAxisHeight }}
@@ -42,7 +44,7 @@ export default ({ placeSlotsArray, predict }) => {
                 />
             </View>
         </View>
-        <View style={{ flexDirection: 'row', marginHorizontal: 30 }}>
+        <View style={{ flexDirection: 'row', marginHorizontal: 30, marginVertical:20 }}>
         <Text>Actual Data</Text>
         <View style={{ flex: 1, height: 20, backgroundColor: '#EE964B',  marginHorizontal: 20 }} />
         <Text style={{ marginLeft: 20 }}>Predicted Data</Text>
@@ -55,6 +57,7 @@ export default ({ placeSlotsArray, predict }) => {
 
 const predictorArrayGenerate = placeSlotsArray => {
     // const predictedData = predictedDataNTUC.map(ele => ele*2)
+    
     const predictedData = predictedDataNTUC.slice(35).map(ele => ele * 2)
     let data = placeSlotsArray.slice(0, 35)
     data.push(...predictedData)
@@ -90,12 +93,42 @@ const predictorArrayGenerate = placeSlotsArray => {
 }
 
 
+const getTimeIndex = () => {
+    const time = moment(new Date()).format('HHmm')
+    // console.log(time)
+    let splitTime = time.split('')
+    
+    if ((Number(splitTime[2])*10) + Number(splitTime[3])>30) {
+        if(splitTime[0]==='2',splitTime[1]==='3'){
+            splitTime[0]= 0
+            splitTime[1] = 0
+        }
+        splitTime[1] =Number(splitTime[1])+1
+        splitTime[2]='0'
+    }
+    else {splitTime[2]='3'}
+    splitTime[3]=0
+    const roundedTime = splitTime.join('')
+    // console.log(roundedTime)
+
+    let timeIndex 
+    utils.getTimeOptions().forEach((ele,index)=>{
+        if(roundedTime===ele){
+            timeIndex = index
+            return 
+        }
+    })
+    return timeIndex
+    // console.log(timeIndex)
+
+}
+
 // WORK IN PROGRESS DO NOT USE
 const dataCompressor = data => {
     let compressedData 
     for (let i = 0; i<12 ; i++){
         let dataSlice = data.slice(0,4)
-        console.log(dataSlice)
+        // console.log(dataSlice)
         compressedData.push(Math.max(...dataSlice))
     }
     return compressedData
