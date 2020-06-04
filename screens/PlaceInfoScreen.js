@@ -61,7 +61,7 @@ const PlaceInfoScreen = (props) => {
                     placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
                 }
                 // console.log(areaCode, placeCode, dateQuery)
-                if(areaCode==='9V2C' && placeCode ==='CQ' && dateQuery === '04062020')  setPredictedData(true)
+                if(areaCode==='9V2C' && placeCode ==='CQ' && dateQuery === '05062020')  setPredictedData(true)
                 else setPredictedData(false)
                 
                 
@@ -196,7 +196,7 @@ const ReseservationList = ({ placeReservations }) => {
             </View>
         )
     }
-    else return (<Text>None.</Text>)
+    else return (<Text style={{margin:10,marginLeft:30}}>None.</Text>)
 }
 
 

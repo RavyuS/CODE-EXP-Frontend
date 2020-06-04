@@ -7,7 +7,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/logo.png",
     "scheme": "myapp",
@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.teamstonks.safelah",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.1.0"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
@@ -33,7 +33,7 @@
     
     "android": {
       "package": "com.teamstonks.safelah",
-      "versionCode": 1
+      "versionCode": 2
     }
   }
 }

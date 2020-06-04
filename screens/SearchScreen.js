@@ -188,9 +188,9 @@ const preparedPlaces = [
     name: "Safarees The Barbershop Heartland Mall"
   },
   {
-    compoundCode: "9V2C+9R Singapore",
-    formattedAddress: "Nex, Singapore",
-    name: "Koi Nex"
+    compoundCode: "7VX3+JM Singapore",
+    formattedAddress: "201, Victoria St, #01-01 Bugis+, Singapore 188067",
+    name: "Koi Cafe"
   },
   {
     compoundCode: "7VJ7+JC Singapore",

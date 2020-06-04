@@ -61,14 +61,14 @@ export default ({ placeSlotsArray, predict }) => {
 
 const predictorArrayGenerate = placeSlotsArray => {
     // const predictedData = predictedDataNTUC.map(ele => ele*2)
-    
-    const predictedData = predictedDataNTUC.slice(35).map(ele => ele * 2)
-    let data = placeSlotsArray.slice(0, 35)
+    const sliceIndex = 30
+    const predictedData = predictedDataNTUC.slice(sliceIndex).map(ele => ele * 2)
+    let data = placeSlotsArray.slice(0, sliceIndex)
     data.push(...predictedData)
     // data = dataCompressor(data)
 
     data = data.map((ele, index) => {
-        if (index < 35) {
+        if (index < sliceIndex) {
             return ({
                 value: ele,
                 svg: { fill: '#EE964B', strokeWidth: 2 }
