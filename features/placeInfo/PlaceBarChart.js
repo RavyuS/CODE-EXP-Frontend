@@ -3,29 +3,32 @@ import * as scale from 'd3-scale'
 import { View, useWindowDimensions, Text } from 'react-native'
 import React from 'react'
 import moment from 'moment';
+// import * as scale from 'd3-scale'
 import utils from '../../utils'
 
 export default ({ placeSlotsArray, predict }) => {
     const axesSvg = { fontSize: 10, fill: 'grey' };
     const verticalContentInset = { top: 10, bottom: 10 }
-    const xAxisHeight = 0
+    const xAxisHeight = 30
     let data
-    const YAxisData = [...placeSlotsArray, 0]
+    const YAxisData = [...placeSlotsArray]
     predict ? data = predictorArrayGenerate(placeSlotsArray) : data = placeSlotsArray.map(ele=>({value:ele,svg:{fill: '#EE964B', strokeWidth: 2}}))
-    console.log(getTimeIndex())
+    // console.log(getTimeIndex())
+    console.log(data)
 
     return (
         <>
-        <View style={{ height: useWindowDimensions().height * 0.30, padding: 20, flexDirection: 'row' }}>
+        <View style={{ height: useWindowDimensions().height * 0.40, padding: 20, flexDirection: 'row' }}>
             <YAxis
                 data={YAxisData}
                 style={{ marginBottom: xAxisHeight }}
                 contentInset={verticalContentInset}
+                // scale={scale.scaleLinear}
                 svg={axesSvg}
             />
             <View style={{ flex: 1, marginLeft: 10 }}>
                 <BarChart
-                    style={{ height: 200 }}
+                    style={{ flex:1 }}
                     data={data}
                     gridMin={0}
                     svg={{ fill: 'rgba(134, 65, 244, 0.8)' }}
@@ -38,13 +41,14 @@ export default ({ placeSlotsArray, predict }) => {
                 <XAxis
                     style={{ marginHorizontal: -10, height: xAxisHeight }}
                     data={xAxisData}
+                    // scale={scale.scaleBand}
                     formatLabel={(_, index) => xAxisData[index]}
                     contentInset={{ left: 10, right: 10 }}
                     svg={axesSvg}
                 />
             </View>
         </View>
-        <View style={{ flexDirection: 'row', marginHorizontal: 30, marginVertical:20 }}>
+        <View style={{ flexDirection: 'row', marginHorizontal: 30 }}>
         <Text>Actual Data</Text>
         <View style={{ flex: 1, height: 20, backgroundColor: '#EE964B',  marginHorizontal: 20 }} />
         <Text style={{ marginLeft: 20 }}>Predicted Data</Text>
