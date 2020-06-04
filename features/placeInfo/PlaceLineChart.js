@@ -9,7 +9,7 @@ export default ({placeSlotsArray,predict}) => {
     const verticalContentInset = { top: 10, bottom: 10 }
     const xAxisHeight = 30
     let data 
-    const YAxisData = [...placeSlotsArray,0]
+    const YAxisData = [...placeSlotsArray]
     predict ? data = predictorArrayGenerate(placeSlotsArray) : data = placeSlotsArray
     return(
         <>

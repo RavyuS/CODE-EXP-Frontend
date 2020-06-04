@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
       flex: 2,
       alignItems: "center",
       justifyContent: "center",
-      marginBottom: 500
+      marginBottom: 400
     },
     infoWrapper: {
       flex: 2,

@@ -29,7 +29,7 @@ function SearchScreen({ navigation, reservations }) {
         formattedAddress: res.data.candidates[0].formatted_address,
         name: res.data.candidates[0].name
       };
-      if (!history.includes([placeDetails])) {
+      if (!history.includes(placeDetails)) {
         setHistory(history => [placeDetails].concat(history));
       }
       navigation.navigate('PlaceInfo', placeDetails);
@@ -188,9 +188,9 @@ const preparedPlaces = [
     name: "Safarees The Barbershop Heartland Mall"
   },
   {
-    compoundCode: "9V2C+9R Singapore",
-    formattedAddress: "Nex, Singapore",
-    name: "Koi Nex"
+    compoundCode: "7VX3+JM Singapore",
+    formattedAddress: "201, Victoria St, #01-01 Bugis+, Singapore 188067",
+    name: "KOI Cafe"
   },
   {
     compoundCode: "7VJ7+JC Singapore",
