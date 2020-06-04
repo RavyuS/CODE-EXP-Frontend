@@ -40,7 +40,7 @@ function SearchScreen({ navigation, reservations }) {
     );
 
   const onSelect = (item) => {
-    console.log(reservations);
+    // console.log(reservations);
     navigation.navigate('PlaceInfo', item)
   }
 

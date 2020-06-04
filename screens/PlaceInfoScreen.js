@@ -14,7 +14,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen'
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Button } from 'react-native-paper';
 import PlaceLineChart from '../features/placeInfo/PlaceLineChart'
-
+import PlaceBarChart from '../features/placeInfo/PlaceBarChart'
 // import { Button } from 'react-native-paper'
 const mapStateToProps = state => ({ reservations: state.account.reservations })
 
@@ -42,7 +42,7 @@ const PlaceInfoScreen = (props) => {
         
     }
     
-    console.log(predictedData)
+    // console.log(predictedData)
     useEffect(() => {
         Axios.get(`${apiURL}/api/locations?areaCode=${areaCode}&date=${dateQuery}`)
             .then(resp => {
@@ -60,7 +60,7 @@ const PlaceInfoScreen = (props) => {
                 if (reservations) {
                     placeReservations = reservations.filter(reservation => reservation[1] === compoundCode && reservation[2] === dateQuery) // assumes compoundCode is at index 1
                 }
-                console.log(areaCode, placeCode, dateQuery)
+                // console.log(areaCode, placeCode, dateQuery)
                 if(areaCode==='9V2C' && placeCode ==='CQ' && dateQuery === '04062020')  setPredictedData(true)
                 else setPredictedData(false)
                 
@@ -110,7 +110,9 @@ const PlaceInfoScreen = (props) => {
 
                     </View>
                     {/* <SlotsBarChart barChartData={renderedData.barChartData} /> */}
-                    <PlaceLineChart placeSlotsArray={renderedData.placeSlotsArray} predict={predictedData} />
+                    {/* <PlaceLineChart placeSlotsArray={renderedData.placeSlotsArray} predict={predictedData} /> */}
+                    <PlaceBarChart placeSlotsArray={renderedData.placeSlotsArray} predict={predictedData} />
+
                     <Text style={styles.reservationsHeader}>Your Reservations</Text>
                     <ReseservationList placeReservations={renderedData.placeReservations} />
                     
